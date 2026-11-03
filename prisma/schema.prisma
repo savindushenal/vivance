@@ -1,0 +1,85 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Status / type fields are plain strings so the schema also works unchanged on
+// Postgres/MySQL. Allowed values live in lib/constants.ts.
+
+model Event {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  description String
+  date        DateTime
+  startTime   String?
+  endTime     String?
+  venue       String?
+  imageUrl    String?
+  gallery     String   @default("[]")
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([date])
+}
+
+model ScheduleItem {
+  id          String   @id @default(cuid())
+  title       String
+  type        String   @default("REHEARSAL")
+  date        DateTime
+  startTime   String?
+  endTime     String?
+  location    String?
+  notes       String?
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([date])
+}
+
+model Inquiry {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  subject   String
+  message   String
+  status    String   @default("NEW")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status])
+}
+
+model Booking {
+  id             String   @id @default(cuid())
+  name           String
+  email          String
+  phone          String
+  organization   String?
+  eventType      String
+  eventDate      DateTime
+  eventTime      String?
+  venue          String
+  expectedGuests Int?
+  message        String?
+  status         String   @default("PENDING")
+  adminNotes     String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([status])
+}
+
+model SiteContent {
+  key       String   @id
+  value     String
+  updatedAt DateTime @updatedAt
+}

@@ -1,0 +1,182 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-display), ui-serif, Georgia, serif;
+  --color-navy: #070b14;
+  --color-navy-deep: #05080f;
+  --color-navy-soft: #121826;
+  --color-ink: #161a22;
+  --color-mist: #e8eaef;
+  --color-pearl: #f5f6f8;
+  --color-champagne: #c5a572;
+  --color-champagne-soft: #d8c19a;
+  --color-champagne-deep: #9a7b45;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-pearl);
+  color: var(--color-ink);
+}
+
+::selection {
+  background: color-mix(in oklab, var(--color-champagne) 35%, transparent);
+  color: var(--color-navy);
+}
+
+@keyframes vivace-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes vivace-glow {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.04);
+  }
+}
+
+@keyframes vivace-shimmer {
+  0% {
+    background-position: 120% 0;
+  }
+  100% {
+    background-position: -20% 0;
+  }
+}
+
+.animate-fade-up {
+  animation: vivace-fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-fade-up-delay-1 {
+  animation: vivace-fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both;
+}
+
+.animate-fade-up-delay-2 {
+  animation: vivace-fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.24s both;
+}
+
+.animate-fade-up-delay-3 {
+  animation: vivace-fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.36s both;
+}
+
+.animate-glow {
+  animation: vivace-glow 5.5s ease-in-out infinite;
+}
+
+.hero-stage {
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 35%, rgba(197, 165, 114, 0.14), transparent 60%),
+    radial-gradient(ellipse 90% 70% at 50% 100%, rgba(18, 24, 38, 0.9), transparent 55%),
+    linear-gradient(165deg, #05080f 0%, #0a1020 42%, #10182a 100%);
+}
+
+.hero-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black, transparent 75%);
+  pointer-events: none;
+  opacity: 0.35;
+}
+
+.logo-halo {
+  background: radial-gradient(circle, rgba(197, 165, 114, 0.28) 0%, transparent 68%);
+}
+
+.link-champagne {
+  color: var(--color-champagne-deep);
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0 1px;
+  transition: background-size 0.25s ease, color 0.2s ease;
+}
+
+.link-champagne:hover {
+  background-size: 100% 1px;
+  color: var(--color-navy);
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.125rem;
+  background: var(--color-champagne);
+  color: var(--color-navy);
+  padding: 0.85rem 1.6rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: var(--color-champagne-soft);
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.125rem;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: white;
+  padding: 0.85rem 1.6rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.55);
+}
+
+.section-rule {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--color-champagne-deep);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+.section-rule::before,
+.section-rule::after {
+  content: "";
+  height: 1px;
+  width: 2rem;
+  background: currentColor;
+  opacity: 0.55;
+}
