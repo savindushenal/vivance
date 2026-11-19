@@ -38,31 +38,31 @@ export function Footer({ content }: { content: SiteContent }) {
 
           <div>
             <p className="font-mono text-[0.65rem] font-medium uppercase tracking-[0.18em] text-[var(--color-champagne)]">
-              Quick links
+              On this page
             </p>
             <ul className="mt-4 space-y-2.5 text-sm">
               <li>
-                <Link href="/about" className="hover:text-white">
+                <Link href="/#occasions" className="hover:text-white">
+                  Occasions
+                </Link>
+              </li>
+              <li>
+                <Link href="/#about" className="hover:text-white">
                   About
                 </Link>
               </li>
               <li>
-                <Link href="/events" className="hover:text-white">
-                  Events
+                <Link href="/#gallery" className="hover:text-white">
+                  Gallery
                 </Link>
               </li>
               <li>
-                <Link href="/schedule" className="hover:text-white">
-                  Schedule
-                </Link>
-              </li>
-              <li>
-                <Link href="/booking" className="hover:text-white">
+                <Link href="/#booking" className="hover:text-white">
                   Book the choir
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:text-white">
+                <Link href="/#contact" className="hover:text-white">
                   Contact
                 </Link>
               </li>
@@ -84,7 +84,7 @@ export function Footer({ content }: { content: SiteContent }) {
               )}
               {content.contactPhone && <p>{content.contactPhone}</p>}
             </address>
-            <Link href="/booking" className="btn-primary mt-6 inline-flex">
+            <Link href="/#booking" className="btn-primary mt-6 inline-flex">
               Book the Choir
             </Link>
           </div>

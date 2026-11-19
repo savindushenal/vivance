@@ -110,8 +110,8 @@ export function BookingForm({
               Call {contactPhone}
             </a>
           )}
-          <Link href="/" className="btn-ghost-dark">
-            Back to home
+          <Link href="/#occasions" className="btn-ghost-dark">
+            Back to top
           </Link>
         </div>
       </div>

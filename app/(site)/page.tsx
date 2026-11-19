@@ -1,17 +1,31 @@
 import Image from "next/image";
 import Link from "next/link";
+import { BookingForm } from "@/components/forms/BookingForm";
+import { InquiryForm } from "@/components/forms/InquiryForm";
+import { ScrollToBooking } from "@/components/site/ScrollToBooking";
 import { getSiteContent } from "@/lib/content";
-import { formatDate, formatTimeRange } from "@/lib/dates";
-import { getUpcomingSchedule } from "@/lib/queries";
-import { SCHEDULE_TYPE_LABELS, labelFor } from "@/lib/constants";
+import { toDateInput } from "@/lib/dates";
+import { getUnavailableBookingDates } from "@/lib/queries";
 import { GALLERY_IMAGES, SITE_IMAGES } from "@/lib/site-images";
 
-export default async function HomePage() {
-  const [content, schedule] = await Promise.all([getSiteContent(), getUpcomingSchedule()]);
-  const nextUp = schedule.filter((item) => item.type !== "REHEARSAL").slice(0, 3);
+export default async function HomePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ type?: string }>;
+}) {
+  const [{ type }, content, unavailableDates] = await Promise.all([
+    searchParams,
+    getSiteContent(),
+    getUnavailableBookingDates(),
+  ]);
+
+  const aboutParagraphs = content.aboutText.split(/\n\s*\n/).filter(Boolean);
 
   return (
     <>
+      <ScrollToBooking enabled={Boolean(type)} />
+
+      {/* Hero */}
       <section className="px-4 pb-6 pt-2 sm:px-6">
         <div className="hero-panel mx-auto max-w-6xl">
           <Image
@@ -42,11 +56,11 @@ export default async function HomePage() {
               </p>
 
               <div className="animate-fade-up-delay-3 mt-6 flex flex-wrap items-center gap-3 sm:mt-7">
-                <Link href="/booking" className="btn-primary">
+                <Link href="#booking" className="btn-primary">
                   Book the Choir
                 </Link>
-                <Link href="#booking-journey" className="btn-ghost">
-                  How booking works
+                <Link href="#about" className="btn-ghost">
+                  About Vivàce
                 </Link>
               </div>
             </div>
@@ -76,7 +90,8 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
+      {/* Occasions */}
+      <section id="occasions" className="mx-auto max-w-6xl scroll-mt-24 px-4 py-16 sm:px-6 sm:py-20">
         <p className="section-rule">Explore the sound</p>
         <h2 className="mt-5 max-w-3xl font-serif text-3xl font-extrabold uppercase tracking-tight text-[var(--color-navy)] sm:text-4xl md:text-5xl">
           One choir. A living tempo for every occasion.
@@ -92,21 +107,21 @@ export default async function HomePage() {
               title: "Weddings",
               copy: "Processionals, hymns, and ceremony moments shaped with warmth and polish.",
               image: SITE_IMAGES.group,
-              href: "/booking?type=WEDDING",
+              href: "/?type=WEDDING#booking",
             },
             {
               num: "02",
               title: "Private celebrations",
               copy: "Receptions, anniversaries, and gatherings where live harmony sets the tone.",
               image: SITE_IMAGES.candid,
-              href: "/booking?type=OTHER",
+              href: "/?type=OTHER#booking",
             },
             {
               num: "03",
               title: "Sacred & corporate",
               copy: "Services, galas, and formal occasions that call for refined choral sound.",
               image: SITE_IMAGES.performance,
-              href: "/booking?type=CHURCH_SERVICE",
+              href: "/?type=CHURCH_SERVICE#booking",
             },
           ].map((item) => (
             <Link
@@ -138,15 +153,10 @@ export default async function HomePage() {
             </Link>
           ))}
         </div>
-
-        <div className="mt-10">
-          <Link href="/booking" className="btn-primary">
-            Request a booking
-          </Link>
-        </div>
       </section>
 
-      <section className="px-4 py-6 sm:px-6">
+      {/* About */}
+      <section id="about" className="scroll-mt-24 px-4 py-6 sm:px-6">
         <div className="panel mx-auto grid max-w-6xl overflow-hidden bg-[var(--color-navy)] text-white lg:grid-cols-2">
           <div className="relative min-h-[18rem] lg:min-h-full">
             <Image
@@ -164,22 +174,26 @@ export default async function HomePage() {
               About {content.choirName}
             </p>
             <h2 className="mt-5 font-serif text-3xl font-extrabold uppercase tracking-tight sm:text-4xl">
-              A place where every note moves the room
+              {content.aboutTitle || "A place where every note moves the room"}
             </h2>
-            <p className="mt-4 text-sm leading-relaxed text-white/65 sm:text-base">
-              Formal black, shared pins, and a living tempo built for ceremonies and celebrations —
-              polished, warm, and ready for hire.
-            </p>
+            <div className="mt-4 space-y-4 text-sm leading-relaxed text-white/65 sm:text-base">
+              {aboutParagraphs.slice(0, 2).map((p, i) => (
+                <p key={i} className="whitespace-pre-line">
+                  {p}
+                </p>
+              ))}
+            </div>
             <div className="mt-8">
-              <Link href="/about" className="btn-primary">
-                Get to know Vivàce
+              <Link href="#booking" className="btn-primary">
+                Book the Choir
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
+      {/* Gallery */}
+      <section id="gallery" className="mx-auto max-w-6xl scroll-mt-24 px-4 py-16 sm:px-6 sm:py-20">
         <p className="section-rule">Inside Vivàce</p>
         <h2 className="mt-5 max-w-3xl font-serif text-3xl font-extrabold uppercase tracking-tight text-[var(--color-navy)] sm:text-4xl">
           A little look inside our music community
@@ -210,7 +224,8 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section id="booking-journey" className="mx-auto max-w-6xl scroll-mt-24 px-4 py-10 sm:px-6 sm:py-14">
+      {/* Journey */}
+      <section id="journey" className="mx-auto max-w-6xl scroll-mt-24 px-4 py-10 sm:px-6 sm:py-14">
         <p className="section-rule">Your booking journey</p>
         <h2 className="mt-5 max-w-3xl font-serif text-3xl font-extrabold uppercase tracking-tight text-[var(--color-navy)] sm:text-4xl">
           Three steps from interest to a confirmed choir
@@ -249,71 +264,108 @@ export default async function HomePage() {
             </div>
           ))}
         </div>
+      </section>
 
-        <div className="mt-10">
-          <Link href="/booking" className="btn-primary">
-            Start your booking request
-          </Link>
+      {/* Booking */}
+      <section id="booking" className="scroll-mt-24 px-4 py-10 sm:px-6 sm:py-16">
+        <div className="mx-auto max-w-6xl">
+          <p className="section-rule">Book the choir</p>
+          <h2 className="mt-5 max-w-3xl font-serif text-3xl font-extrabold uppercase tracking-tight text-[var(--color-navy)] sm:text-4xl">
+            Your first note starts here
+          </h2>
+          <p className="mt-4 max-w-2xl text-base leading-relaxed text-[var(--color-ink)]/65">
+            Occasion, details, and contact in three short steps. A request does not lock the date until we
+            confirm.
+          </p>
+
+          <div className="mt-10 grid gap-8 lg:grid-cols-3">
+            <div className="rounded-[1.5rem] border border-[var(--color-navy)]/10 bg-white p-6 sm:p-8 lg:col-span-2">
+              <BookingForm
+                minDate={toDateInput(new Date())}
+                unavailableDates={unavailableDates}
+                defaultEventType={type}
+                contactEmail={content.contactEmail}
+                contactPhone={content.contactPhone}
+              />
+            </div>
+            <aside className="space-y-6 text-sm text-[var(--color-ink)]/70">
+              <div className="rounded-[1.5rem] bg-[var(--color-navy)] px-5 py-6 text-white">
+                <h3 className="font-serif text-xl font-semibold">What makes a strong request</h3>
+                <ul className="mt-4 space-y-3 text-white/70">
+                  <li>Occasion + preferred date</li>
+                  <li>Venue and approximate guest count</li>
+                  <li>Moments you want sung</li>
+                  <li>A phone number we can reach</li>
+                </ul>
+              </div>
+              {(content.contactPhone || content.contactEmail) && (
+                <div className="rounded-[1.5rem] border border-[var(--color-navy)]/10 bg-white px-5 py-6">
+                  <h3 className="font-serif text-xl font-semibold text-[var(--color-navy)]">Prefer to talk?</h3>
+                  {content.contactPhone && (
+                    <p className="mt-3">
+                      <a
+                        href={`tel:${content.contactPhone.replace(/\s+/g, "")}`}
+                        className="link-champagne"
+                      >
+                        {content.contactPhone}
+                      </a>
+                    </p>
+                  )}
+                  {content.contactEmail && (
+                    <p className="mt-1">
+                      <a href={`mailto:${content.contactEmail}`} className="link-champagne">
+                        {content.contactEmail}
+                      </a>
+                    </p>
+                  )}
+                </div>
+              )}
+            </aside>
+          </div>
         </div>
       </section>
 
-      {nextUp.length > 0 && (
-        <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <div>
-              <p className="section-rule">Schedule</p>
-              <h2 className="mt-5 font-serif text-3xl font-extrabold uppercase tracking-tight text-[var(--color-navy)] sm:text-4xl">
-                Coming up
-              </h2>
-            </div>
-            <Link href="/schedule" className="link-champagne text-sm">
-              Full schedule →
-            </Link>
-          </div>
-          <ul className="mt-8 overflow-hidden rounded-[1.5rem] border border-[var(--color-navy)]/10 bg-white/60">
-            {nextUp.map((item) => (
-              <li
-                key={item.id}
-                className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--color-navy)]/8 px-5 py-5 last:border-b-0"
-              >
-                <div>
-                  <p className="font-semibold text-[var(--color-navy)]">{item.title}</p>
-                  <p className="mt-1 text-sm text-[var(--color-ink)]/55">
-                    {formatDate(item.date)}
-                    {item.startTime && ` · ${formatTimeRange(item.startTime, item.endTime)}`}
-                    {item.location && ` · ${item.location}`}
-                  </p>
-                </div>
-                <span className="rounded-full bg-[var(--color-navy)]/5 px-3 py-1 font-mono text-[0.65rem] font-medium uppercase tracking-wider text-[var(--color-navy)]/70">
-                  {labelFor(SCHEDULE_TYPE_LABELS, item.type)}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
+      {/* Contact */}
+      <section id="contact" className="mx-auto max-w-6xl scroll-mt-24 px-4 py-10 sm:px-6 sm:py-16">
+        <p className="section-rule">Contact</p>
+        <h2 className="mt-5 max-w-3xl font-serif text-3xl font-extrabold uppercase tracking-tight text-[var(--color-navy)] sm:text-4xl">
+          Questions, membership, or a quick note
+        </h2>
+        <p className="mt-4 max-w-2xl text-base leading-relaxed text-[var(--color-ink)]/65">
+          Hiring the choir? Use the booking request above. This form is for general questions and membership.
+        </p>
 
-      <section className="px-4 py-10 sm:px-6 sm:py-16">
-        <div className="panel mx-auto max-w-6xl bg-[var(--color-navy)] px-6 py-14 text-center text-white sm:px-12 sm:py-20">
-          <p className="badge-pill mx-auto text-white/85">
-            <span className="badge-dot" />
-            Bookings
-          </p>
-          <h2 className="mx-auto mt-5 max-w-3xl font-serif text-3xl font-extrabold uppercase tracking-tight sm:text-5xl">
-            Your first note starts here
-          </h2>
-          <p className="mx-auto mt-4 max-w-xl text-base text-white/60">
-            Tell us about your wedding, service, or celebration — we&apos;ll help shape the music and
-            the ensemble for the day.
-          </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Link href="/booking" className="btn-primary">
-              Book the Choir
-            </Link>
-            <Link href="/contact" className="btn-ghost">
-              Send an inquiry
-            </Link>
+        <div className="mt-10 grid gap-8 lg:grid-cols-3">
+          <div className="rounded-[1.5rem] border border-[var(--color-navy)]/10 bg-white p-6 sm:p-8 lg:col-span-2">
+            <InquiryForm />
           </div>
+          <aside className="space-y-4 text-sm text-[var(--color-ink)]/70">
+            {content.contactAddress && (
+              <div className="rounded-[1.5rem] border border-[var(--color-navy)]/10 bg-white px-5 py-5">
+                <p className="font-semibold text-[var(--color-navy)]">Address</p>
+                <p className="mt-2 whitespace-pre-line">{content.contactAddress}</p>
+              </div>
+            )}
+            {content.contactEmail && (
+              <div className="rounded-[1.5rem] border border-[var(--color-navy)]/10 bg-white px-5 py-5">
+                <p className="font-semibold text-[var(--color-navy)]">Email</p>
+                <a href={`mailto:${content.contactEmail}`} className="link-champagne mt-2 inline-block">
+                  {content.contactEmail}
+                </a>
+              </div>
+            )}
+            {content.contactPhone && (
+              <div className="rounded-[1.5rem] border border-[var(--color-navy)]/10 bg-white px-5 py-5">
+                <p className="font-semibold text-[var(--color-navy)]">Phone</p>
+                <a
+                  href={`tel:${content.contactPhone.replace(/\s+/g, "")}`}
+                  className="link-champagne mt-2 inline-block"
+                >
+                  {content.contactPhone}
+                </a>
+              </div>
+            )}
+          </aside>
         </div>
       </section>
     </>

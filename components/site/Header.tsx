@@ -7,22 +7,17 @@ import { BrandMark } from "@/components/site/BrandMark";
 import { cn } from "@/lib/utils";
 
 const NAV = [
-  { href: "/about", label: "About" },
-  { href: "/schedule", label: "Schedule" },
-  { href: "/events", label: "Events" },
-  { href: "/events/past", label: "Past Events" },
-  { href: "/contact", label: "Contact" },
+  { href: "/#occasions", label: "Occasions" },
+  { href: "/#about", label: "About" },
+  { href: "/#gallery", label: "Gallery" },
+  { href: "/#contact", label: "Contact" },
 ];
-
-function isActive(pathname: string, href: string) {
-  if (href === "/events") return pathname === "/events" || /^\/events\/(?!past)/.test(pathname);
-  return pathname.startsWith(href);
-}
 
 export function Header({ choirName }: { choirName: string }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [hash, setHash] = useState("");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -33,7 +28,14 @@ export function Header({ choirName }: { choirName: string }) {
 
   useEffect(() => {
     setOpen(false);
+    setHash(typeof window !== "undefined" ? window.location.hash : "");
   }, [pathname]);
+
+  useEffect(() => {
+    const onHash = () => setHash(window.location.hash);
+    window.addEventListener("hashchange", onHash);
+    return () => window.removeEventListener("hashchange", onHash);
+  }, []);
 
   return (
     <header
@@ -46,21 +48,24 @@ export function Header({ choirName }: { choirName: string }) {
         <BrandMark choirName={choirName} compact />
 
         <nav className="hidden items-center gap-1 lg:flex">
-          {NAV.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                "rounded-full px-3.5 py-2 text-sm font-medium tracking-wide transition",
-                isActive(pathname, item.href)
-                  ? "bg-[var(--color-navy)] text-white"
-                  : "text-[var(--color-ink)]/70 hover:bg-black/5 hover:text-[var(--color-navy)]",
-              )}
-            >
-              {item.label}
-            </Link>
-          ))}
-          <Link href="/booking" className="btn-primary ml-2">
+          {NAV.map((item) => {
+            const active = pathname === "/" && hash === item.href.replace("/#", "#");
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  "rounded-full px-3.5 py-2 text-sm font-medium tracking-wide transition",
+                  active
+                    ? "bg-[var(--color-navy)] text-white"
+                    : "text-[var(--color-ink)]/70 hover:bg-black/5 hover:text-[var(--color-navy)]",
+                )}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+          <Link href="/#booking" className="btn-primary ml-2">
             Book the Choir
           </Link>
         </nav>
@@ -84,30 +89,17 @@ export function Header({ choirName }: { choirName: string }) {
 
       {open && (
         <nav className="border-t border-[var(--color-navy)]/10 px-4 py-4 lg:hidden">
-          <Link
-            href="/"
-            className={cn(
-              "block rounded-xl px-3 py-3 text-base font-medium",
-              pathname === "/" ? "bg-[var(--color-navy)] text-white" : "text-[var(--color-ink)]",
-            )}
-          >
-            Home
-          </Link>
           {NAV.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className={cn(
-                "mt-1 block rounded-xl px-3 py-3 text-base font-medium",
-                isActive(pathname, item.href)
-                  ? "bg-[var(--color-navy)] text-white"
-                  : "text-[var(--color-ink)]",
-              )}
+              onClick={() => setOpen(false)}
+              className="mt-1 block rounded-xl px-3 py-3 text-base font-medium text-[var(--color-ink)]"
             >
               {item.label}
             </Link>
           ))}
-          <Link href="/booking" className="btn-primary mt-3 w-full">
+          <Link href="/#booking" onClick={() => setOpen(false)} className="btn-primary mt-3 w-full">
             Book the Choir
           </Link>
         </nav>
