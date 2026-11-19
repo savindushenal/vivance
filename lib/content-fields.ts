@@ -54,10 +54,10 @@ export const CONTENT_FIELDS = {
       "Vivàce is a commercial choir built for occasions that deserve live harmony — weddings, celebrations, sacred services and private events.\n\nOur repertoire spans centuries: Renaissance motets and classical masterworks alongside gospel, spirituals and modern arrangements, shaped to fit the tone of your day.\n\nWhether you need a processional, a ceremony set, or a reception performance, we bring polish, warmth and a living tempo to every booking.",
   },
   rehearsalInfo: {
-    label: "Rehearsal info",
+    label: "Booking note (internal / optional)",
     type: "textarea",
     group: "About page",
-    defaultValue: "We rehearse every Thursday from 7:00 PM to 9:00 PM at the parish hall.",
+    defaultValue: "Available for weddings, private celebrations, sacred services, and corporate gatherings.",
   },
   contactEmail: {
     label: "Contact email",

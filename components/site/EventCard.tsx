@@ -38,27 +38,30 @@ export function EventCard({ event, past = false }: { event: Event; past?: boolea
   const month = event.date.toLocaleDateString("en-US", { month: "short" });
 
   return (
-    <Link href={`/events/${event.slug}`} className="group flex flex-col overflow-hidden">
+    <Link
+      href={`/events/${event.slug}`}
+      className="group flex flex-col overflow-hidden rounded-[1.5rem] border border-[var(--color-navy)]/10 bg-white/70 transition hover:-translate-y-0.5"
+    >
       <div className="relative overflow-hidden">
         <EventImage
           src={event.imageUrl}
           alt={event.title}
           className="aspect-[16/10] transition duration-500 group-hover:scale-[1.03]"
         />
-        <div className="absolute left-0 top-0 bg-[var(--color-navy)]/90 px-3 py-2 text-center text-white backdrop-blur-sm">
-          <p className="font-serif text-2xl font-semibold leading-none">{day}</p>
-          <p className="mt-1 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-[var(--color-champagne-soft)]">
+        <div className="absolute left-3 top-3 rounded-2xl bg-[var(--color-navy)]/90 px-3 py-2 text-center text-white backdrop-blur-sm">
+          <p className="font-serif text-2xl font-extrabold leading-none">{day}</p>
+          <p className="mt-1 font-mono text-[0.6rem] font-medium uppercase tracking-[0.16em] text-[var(--color-champagne)]">
             {month}
           </p>
         </div>
         {past && (
-          <span className="absolute right-3 top-3 bg-black/55 px-2.5 py-1 text-[0.65rem] font-medium uppercase tracking-wider text-white backdrop-blur-sm">
+          <span className="absolute right-3 top-3 rounded-full bg-black/55 px-2.5 py-1 font-mono text-[0.6rem] font-medium uppercase tracking-wider text-white backdrop-blur-sm">
             Past event
           </span>
         )}
       </div>
-      <div className="flex flex-1 flex-col border-b border-[var(--color-navy)]/10 py-5">
-        <h3 className="font-serif text-xl font-semibold tracking-wide text-[var(--color-navy)] transition group-hover:text-[var(--color-champagne-deep)]">
+      <div className="flex flex-1 flex-col p-5">
+        <h3 className="font-serif text-xl font-bold tracking-tight text-[var(--color-navy)] transition group-hover:text-[var(--color-champagne-deep)]">
           {event.title}
         </h3>
         <p className="mt-1 text-sm text-[var(--color-ink)]/55">
@@ -69,7 +72,7 @@ export function EventCard({ event, past = false }: { event: Event; past?: boolea
         <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-[var(--color-ink)]/65">
           {event.description}
         </p>
-        <span className="mt-auto pt-4 text-sm font-semibold tracking-wide text-[var(--color-champagne-deep)]">
+        <span className="mt-auto pt-4 text-sm font-semibold tracking-wide text-[var(--color-navy)]">
           View details →
         </span>
       </div>

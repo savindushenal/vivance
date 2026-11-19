@@ -47,8 +47,10 @@ export default async function ContactPage() {
             </dl>
           </div>
           <div className="border-t border-[var(--color-champagne)]/50 pt-5">
-            <h2 className="font-serif text-xl font-semibold text-[var(--color-navy)]">Rehearsals</h2>
-            <p className="mt-2">{content.rehearsalInfo}</p>
+            <h2 className="font-serif text-xl font-semibold text-[var(--color-navy)]">Bookings</h2>
+            <p className="mt-2">
+              Available for weddings, private celebrations, sacred services, and corporate gatherings.
+            </p>
           </div>
         </aside>
       </section>

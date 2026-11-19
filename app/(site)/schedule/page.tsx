@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import type { ScheduleItem } from "@prisma/client";
 import { PageHeader } from "@/components/site/PageHeader";
 import { SCHEDULE_TYPE_LABELS, labelFor } from "@/lib/constants";
-import { getSiteContent } from "@/lib/content";
 import { formatMonth, formatTimeRange } from "@/lib/dates";
 import { getUpcomingSchedule } from "@/lib/queries";
 import { cn } from "@/lib/utils";
@@ -10,7 +9,6 @@ import { cn } from "@/lib/utils";
 export const metadata: Metadata = { title: "Schedule" };
 
 const TYPE_STYLES: Record<string, string> = {
-  REHEARSAL: "bg-[var(--color-navy)]/5 text-[var(--color-navy)]",
   PERFORMANCE: "bg-[var(--color-champagne)]/20 text-[var(--color-champagne-deep)]",
   SERVICE: "bg-emerald-50 text-emerald-800",
   OTHER: "bg-[var(--color-mist)] text-[var(--color-ink)]/70",
@@ -26,12 +24,16 @@ function groupByMonth(items: ScheduleItem[]) {
 }
 
 export default async function SchedulePage() {
-  const [items, content] = await Promise.all([getUpcomingSchedule(), getSiteContent()]);
+  const all = await getUpcomingSchedule();
+  const items = all.filter((item) => item.type !== "REHEARSAL");
   const groups = groupByMonth(items);
 
   return (
     <>
-      <PageHeader title="Schedule" subtitle={content.rehearsalInfo} />
+      <PageHeader
+        title="Schedule"
+        subtitle="Upcoming performances, services, and appearances with Vivàce."
+      />
       <section className="mx-auto max-w-4xl px-4 py-16 sm:px-6">
         {groups.length === 0 && (
           <p className="text-center text-[var(--color-ink)]/55">
@@ -47,7 +49,7 @@ export default async function SchedulePage() {
               <ul className="mt-4 divide-y divide-[var(--color-navy)]/10 border-y border-[var(--color-navy)]/10">
                 {monthItems.map((item) => (
                   <li key={item.id} className="flex gap-4 py-4">
-                    <div className="w-16 shrink-0 bg-[var(--color-navy)] py-2 text-center text-white">
+                    <div className="w-16 shrink-0 rounded-2xl bg-[var(--color-navy)] py-2 text-center text-white">
                       <p className="text-[0.65rem] uppercase tracking-wider text-[var(--color-champagne-soft)]">
                         {item.date.toLocaleDateString("en-US", { weekday: "short" })}
                       </p>
@@ -60,7 +62,7 @@ export default async function SchedulePage() {
                         <p className="font-semibold text-[var(--color-navy)]">{item.title}</p>
                         <span
                           className={cn(
-                            "rounded-sm px-2.5 py-0.5 text-xs font-medium uppercase tracking-wider",
+                            "rounded-full px-2.5 py-0.5 text-xs font-medium uppercase tracking-wider",
                             TYPE_STYLES[item.type] ?? TYPE_STYLES.OTHER,
                           )}
                         >
