@@ -58,12 +58,7 @@ export function Footer({ content }: { content: SiteContent }) {
               </li>
               <li>
                 <Link href="/#booking" className="hover:text-white">
-                  Book the choir
-                </Link>
-              </li>
-              <li>
-                <Link href="/#contact" className="hover:text-white">
-                  Contact
+                  Book / contact
                 </Link>
               </li>
             </ul>

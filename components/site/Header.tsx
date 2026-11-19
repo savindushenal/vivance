@@ -10,7 +10,7 @@ const NAV = [
   { href: "/#occasions", label: "Occasions" },
   { href: "/#about", label: "About" },
   { href: "/#gallery", label: "Gallery" },
-  { href: "/#contact", label: "Contact" },
+  { href: "/#booking", label: "Book" },
 ];
 
 export function Header({ choirName }: { choirName: string }) {

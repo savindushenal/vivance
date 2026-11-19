@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { BookingForm } from "@/components/forms/BookingForm";
-import { InquiryForm } from "@/components/forms/InquiryForm";
 import { ScrollToBooking } from "@/components/site/ScrollToBooking";
 import { getSiteContent } from "@/lib/content";
 import { toDateInput } from "@/lib/dates";
@@ -298,74 +297,31 @@ export default async function HomePage({
                   <li>A phone number we can reach</li>
                 </ul>
               </div>
-              {(content.contactPhone || content.contactEmail) && (
-                <div className="rounded-[1.5rem] border border-[var(--color-navy)]/10 bg-white px-5 py-6">
-                  <h3 className="font-serif text-xl font-semibold text-[var(--color-navy)]">Prefer to talk?</h3>
-                  {content.contactPhone && (
-                    <p className="mt-3">
-                      <a
-                        href={`tel:${content.contactPhone.replace(/\s+/g, "")}`}
-                        className="link-champagne"
-                      >
-                        {content.contactPhone}
-                      </a>
-                    </p>
-                  )}
-                  {content.contactEmail && (
-                    <p className="mt-1">
-                      <a href={`mailto:${content.contactEmail}`} className="link-champagne">
-                        {content.contactEmail}
-                      </a>
-                    </p>
-                  )}
-                </div>
-              )}
+              <div id="contact" className="scroll-mt-24 rounded-[1.5rem] border border-[var(--color-navy)]/10 bg-white px-5 py-6">
+                <h3 className="font-serif text-xl font-semibold text-[var(--color-navy)]">Contact</h3>
+                {content.contactAddress && (
+                  <p className="mt-3 whitespace-pre-line">{content.contactAddress}</p>
+                )}
+                {content.contactPhone && (
+                  <p className="mt-3">
+                    <a
+                      href={`tel:${content.contactPhone.replace(/\s+/g, "")}`}
+                      className="link-champagne"
+                    >
+                      {content.contactPhone}
+                    </a>
+                  </p>
+                )}
+                {content.contactEmail && (
+                  <p className="mt-1">
+                    <a href={`mailto:${content.contactEmail}`} className="link-champagne">
+                      {content.contactEmail}
+                    </a>
+                  </p>
+                )}
+              </div>
             </aside>
           </div>
-        </div>
-      </section>
-
-      {/* Contact */}
-      <section id="contact" className="mx-auto max-w-6xl scroll-mt-24 px-4 py-10 sm:px-6 sm:py-16">
-        <p className="section-rule">Contact</p>
-        <h2 className="mt-5 max-w-3xl font-serif text-3xl font-extrabold uppercase tracking-tight text-[var(--color-navy)] sm:text-4xl">
-          Questions, membership, or a quick note
-        </h2>
-        <p className="mt-4 max-w-2xl text-base leading-relaxed text-[var(--color-ink)]/65">
-          Hiring the choir? Use the booking request above. This form is for general questions and membership.
-        </p>
-
-        <div className="mt-10 grid gap-8 lg:grid-cols-3">
-          <div className="rounded-[1.5rem] border border-[var(--color-navy)]/10 bg-white p-6 sm:p-8 lg:col-span-2">
-            <InquiryForm />
-          </div>
-          <aside className="space-y-4 text-sm text-[var(--color-ink)]/70">
-            {content.contactAddress && (
-              <div className="rounded-[1.5rem] border border-[var(--color-navy)]/10 bg-white px-5 py-5">
-                <p className="font-semibold text-[var(--color-navy)]">Address</p>
-                <p className="mt-2 whitespace-pre-line">{content.contactAddress}</p>
-              </div>
-            )}
-            {content.contactEmail && (
-              <div className="rounded-[1.5rem] border border-[var(--color-navy)]/10 bg-white px-5 py-5">
-                <p className="font-semibold text-[var(--color-navy)]">Email</p>
-                <a href={`mailto:${content.contactEmail}`} className="link-champagne mt-2 inline-block">
-                  {content.contactEmail}
-                </a>
-              </div>
-            )}
-            {content.contactPhone && (
-              <div className="rounded-[1.5rem] border border-[var(--color-navy)]/10 bg-white px-5 py-5">
-                <p className="font-semibold text-[var(--color-navy)]">Phone</p>
-                <a
-                  href={`tel:${content.contactPhone.replace(/\s+/g, "")}`}
-                  className="link-champagne mt-2 inline-block"
-                >
-                  {content.contactPhone}
-                </a>
-              </div>
-            )}
-          </aside>
         </div>
       </section>
     </>
