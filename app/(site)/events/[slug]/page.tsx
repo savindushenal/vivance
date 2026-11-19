@@ -9,7 +9,11 @@ import { parseGallery } from "@/lib/utils";
 type Props = { params: Promise<{ slug: string }> };
 
 async function getEvent(slug: string) {
-  return db.event.findFirst({ where: { slug, isPublished: true } });
+  try {
+    return await db.event.findFirst({ where: { slug, isPublished: true } });
+  } catch {
+    return null;
+  }
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
