@@ -266,7 +266,7 @@ export default async function HomePage({
       </section>
 
       {/* Booking */}
-      <section id="booking" className="scroll-mt-28 px-4 py-10 sm:px-6 sm:py-16">
+      <section id="booking" className="scroll-mt-28 px-4 py-10 [overflow-anchor:none] sm:px-6 sm:py-16">
         <div className="mx-auto max-w-6xl">
           <p className="section-rule">Book the choir</p>
           <h2 className="mt-5 max-w-3xl font-serif text-3xl font-extrabold uppercase tracking-tight text-[var(--color-navy)] sm:text-4xl">
