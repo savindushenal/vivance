@@ -118,16 +118,31 @@ export function BookingForm({
     );
   }
 
+  /** Blur + lock scroll so hiding the Continue button doesn't jump the page. */
+  function goToStep(next: number) {
+    const y = window.scrollY;
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+    setStep(next);
+    const restore = () => window.scrollTo({ top: y, left: 0, behavior: "auto" });
+    restore();
+    requestAnimationFrame(() => {
+      restore();
+      requestAnimationFrame(restore);
+    });
+  }
+
   function goNext() {
     if (step === 1 && (!eventType || !eventDate)) return;
     if (step === 2) {
-      const venue = (document.getElementById("venue") as HTMLInputElement | null)?.value?.trim();
-      if (!venue) {
-        document.getElementById("venue")?.focus();
+      const venue = document.getElementById("venue") as HTMLInputElement | null;
+      if (!venue?.value?.trim()) {
+        venue?.focus({ preventScroll: true });
         return;
       }
     }
-    setStep((s) => Math.min(3, s + 1));
+    goToStep(Math.min(3, step + 1));
   }
 
   return (
@@ -145,7 +160,7 @@ export function BookingForm({
           <div key={item.id} className="flex items-center gap-2">
             <button
               type="button"
-              onClick={() => item.id < step && setStep(item.id)}
+              onClick={() => item.id < step && goToStep(item.id)}
               className={cn(
                 "rounded-full px-3.5 py-1.5 font-mono text-[0.65rem] font-medium uppercase tracking-[0.14em] transition",
                 step === item.id
@@ -267,7 +282,7 @@ export function BookingForm({
           />
         </Field>
         <div className="flex flex-wrap justify-between gap-3">
-          <button type="button" className="btn-ghost-dark" onClick={() => setStep(1)}>
+          <button type="button" className="btn-ghost-dark" onClick={() => goToStep(1)}>
             Back
           </button>
           <button type="button" className="btn-primary" onClick={goNext}>
@@ -309,7 +324,7 @@ export function BookingForm({
           Submitting does not lock the date. We confirm availability before anything is final.
         </div>
         <div className="flex flex-wrap justify-between gap-3">
-          <button type="button" className="btn-ghost-dark" onClick={() => setStep(2)}>
+          <button type="button" className="btn-ghost-dark" onClick={() => goToStep(2)}>
             Back
           </button>
           <SubmitButton pendingText="Sending request...">Submit booking request</SubmitButton>
