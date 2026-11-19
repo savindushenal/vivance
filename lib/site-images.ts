@@ -1,17 +1,16 @@
-/** Curated public gallery from /public/uploads/Photos */
+/** Tracked, compressed brand photos under /public/brand (uploads/ is gitignored). */
 export const SITE_IMAGES = {
   hero: "/brand/hero-choir.jpg",
-  about: "/uploads/Photos/1794422625686.jpg",
-  performance: "/uploads/Photos/1794422693594.jpg",
-  piano: "/uploads/Photos/1794422578141.jpg",
-  squareA: "/uploads/Photos/1794422589499.jpg",
-  squareB: "/uploads/Photos/1794422604289.jpg",
-  portrait: "/uploads/Photos/1794422616649.jpg",
-  group: "/uploads/Photos/1794422613210.jpg",
-  candid: "/uploads/Photos/1794422584674.jpg",
-  moment: "/uploads/Photos/1794422715490.jpg",
-  learning: "/uploads/Photos/1794422729672.jpg",
-  livePresence: "/uploads/Photos/1794422580715.jpg",
+  about: "/brand/site/about.jpg",
+  performance: "/brand/site/performance.jpg",
+  piano: "/brand/site/piano.jpg",
+  squareA: "/brand/site/stage.jpg",
+  portrait: "/brand/site/portrait.jpg",
+  group: "/brand/site/wedding.jpg",
+  candid: "/brand/site/candid.jpg",
+  moment: "/brand/site/moment.jpg",
+  learning: "/brand/site/learning.jpg",
+  livePresence: "/brand/site/live.jpg",
 } as const;
 
 export const GALLERY_IMAGES = [
