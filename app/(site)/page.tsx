@@ -1,7 +1,7 @@
 import Image from "next/image";
-import Link from "next/link";
 import { BookingForm } from "@/components/forms/BookingForm";
 import { ScrollToBooking } from "@/components/site/ScrollToBooking";
+import { SmoothHashLink } from "@/components/site/SmoothHashLink";
 import { getSiteContent } from "@/lib/content";
 import { toDateInput } from "@/lib/dates";
 import { getUnavailableBookingDates } from "@/lib/queries";
@@ -22,7 +22,7 @@ export default async function HomePage({
 
   return (
     <>
-      <ScrollToBooking enabled={Boolean(type)} />
+      <ScrollToBooking type={type} />
 
       {/* Hero */}
       <section className="px-4 pb-6 pt-2 sm:px-6">
@@ -55,12 +55,12 @@ export default async function HomePage({
               </p>
 
               <div className="animate-fade-up-delay-3 mt-6 flex flex-wrap items-center gap-3 sm:mt-7">
-                <Link href="#booking" className="btn-primary">
+                <SmoothHashLink href="#booking" className="btn-primary">
                   Book the Choir
-                </Link>
-                <Link href="#about" className="btn-ghost">
+                </SmoothHashLink>
+                <SmoothHashLink href="#about" className="btn-ghost">
                   About Vivàce
-                </Link>
+                </SmoothHashLink>
               </div>
             </div>
           </div>
@@ -106,24 +106,24 @@ export default async function HomePage({
               title: "Weddings",
               copy: "Processionals, hymns, and ceremony moments shaped with warmth and polish.",
               image: SITE_IMAGES.group,
-              href: "/?type=WEDDING#booking",
+              href: "/?type=WEDDING",
             },
             {
               num: "02",
               title: "Private celebrations",
               copy: "Receptions, anniversaries, and gatherings where live harmony sets the tone.",
               image: SITE_IMAGES.candid,
-              href: "/?type=OTHER#booking",
+              href: "/?type=OTHER",
             },
             {
               num: "03",
               title: "Sacred & corporate",
               copy: "Services, galas, and formal occasions that call for refined choral sound.",
               image: SITE_IMAGES.performance,
-              href: "/?type=CHURCH_SERVICE#booking",
+              href: "/?type=CHURCH_SERVICE",
             },
           ].map((item) => (
-            <Link
+            <SmoothHashLink
               key={item.title}
               href={item.href}
               className="occasion-card group !p-0 overflow-hidden transition hover:-translate-y-0.5"
@@ -149,7 +149,7 @@ export default async function HomePage({
                   Start this request →
                 </p>
               </div>
-            </Link>
+            </SmoothHashLink>
           ))}
         </div>
       </section>
@@ -183,9 +183,9 @@ export default async function HomePage({
               ))}
             </div>
             <div className="mt-8">
-              <Link href="#booking" className="btn-primary">
+              <SmoothHashLink href="#booking" className="btn-primary">
                 Book the Choir
-              </Link>
+              </SmoothHashLink>
             </div>
           </div>
         </div>
@@ -266,7 +266,7 @@ export default async function HomePage({
       </section>
 
       {/* Booking */}
-      <section id="booking" className="scroll-mt-24 px-4 py-10 sm:px-6 sm:py-16">
+      <section id="booking" className="scroll-mt-28 px-4 py-10 sm:px-6 sm:py-16">
         <div className="mx-auto max-w-6xl">
           <p className="section-rule">Book the choir</p>
           <h2 className="mt-5 max-w-3xl font-serif text-3xl font-extrabold uppercase tracking-tight text-[var(--color-navy)] sm:text-4xl">

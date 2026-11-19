@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { BrandMark } from "@/components/site/BrandMark";
+import { SmoothHashLink } from "@/components/site/SmoothHashLink";
 import { cn } from "@/lib/utils";
 
 const NAV = [
@@ -51,7 +51,7 @@ export function Header({ choirName }: { choirName: string }) {
           {NAV.map((item) => {
             const active = pathname === "/" && hash === item.href.replace("/#", "#");
             return (
-              <Link
+              <SmoothHashLink
                 key={item.href}
                 href={item.href}
                 className={cn(
@@ -62,12 +62,12 @@ export function Header({ choirName }: { choirName: string }) {
                 )}
               >
                 {item.label}
-              </Link>
+              </SmoothHashLink>
             );
           })}
-          <Link href="/#booking" className="btn-primary ml-2">
+          <SmoothHashLink href="/#booking" className="btn-primary ml-2">
             Book the Choir
-          </Link>
+          </SmoothHashLink>
         </nav>
 
         <button
@@ -90,18 +90,22 @@ export function Header({ choirName }: { choirName: string }) {
       {open && (
         <nav className="border-t border-[var(--color-navy)]/10 px-4 py-4 lg:hidden">
           {NAV.map((item) => (
-            <Link
+            <SmoothHashLink
               key={item.href}
               href={item.href}
               onClick={() => setOpen(false)}
               className="mt-1 block rounded-xl px-3 py-3 text-base font-medium text-[var(--color-ink)]"
             >
               {item.label}
-            </Link>
+            </SmoothHashLink>
           ))}
-          <Link href="/#booking" onClick={() => setOpen(false)} className="btn-primary mt-3 w-full">
+          <SmoothHashLink
+            href="/#booking"
+            onClick={() => setOpen(false)}
+            className="btn-primary mt-3 w-full"
+          >
             Book the Choir
-          </Link>
+          </SmoothHashLink>
         </nav>
       )}
     </header>

@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { BrandWordmark } from "@/components/site/BrandMark";
+import { SmoothHashLink } from "@/components/site/SmoothHashLink";
 import type { SiteContent } from "@/lib/content-fields";
 
 export function Footer({ content }: { content: SiteContent }) {
@@ -42,24 +42,24 @@ export function Footer({ content }: { content: SiteContent }) {
             </p>
             <ul className="mt-4 space-y-2.5 text-sm">
               <li>
-                <Link href="/#occasions" className="hover:text-white">
+                <SmoothHashLink href="/#occasions" className="hover:text-white">
                   Occasions
-                </Link>
+                </SmoothHashLink>
               </li>
               <li>
-                <Link href="/#about" className="hover:text-white">
+                <SmoothHashLink href="/#about" className="hover:text-white">
                   About
-                </Link>
+                </SmoothHashLink>
               </li>
               <li>
-                <Link href="/#gallery" className="hover:text-white">
+                <SmoothHashLink href="/#gallery" className="hover:text-white">
                   Gallery
-                </Link>
+                </SmoothHashLink>
               </li>
               <li>
-                <Link href="/#booking" className="hover:text-white">
+                <SmoothHashLink href="/#booking" className="hover:text-white">
                   Book / contact
-                </Link>
+                </SmoothHashLink>
               </li>
             </ul>
           </div>
@@ -79,9 +79,9 @@ export function Footer({ content }: { content: SiteContent }) {
               )}
               {content.contactPhone && <p>{content.contactPhone}</p>}
             </address>
-            <Link href="/#booking" className="btn-primary mt-6 inline-flex">
+            <SmoothHashLink href="/#booking" className="btn-primary mt-6 inline-flex">
               Book the Choir
-            </Link>
+            </SmoothHashLink>
           </div>
         </div>
         <div className="border-t border-white/10 px-6 py-4 text-center text-xs text-white/40 sm:px-10">
