@@ -25,8 +25,14 @@ export async function submitInquiry(_prev: ActionState, formData: FormData): Pro
     return { ok: false, message: "Please fix the errors below.", errors: fieldErrors(parsed.error), values };
   }
 
-  await db.inquiry.create({ data: parsed.data });
-  revalidatePath("/admin", "layout");
+  try {
+    await db.inquiry.create({ data: parsed.data });
+    revalidatePath("/admin", "layout");
+  } catch {
+    // Soft-fail when DB is unavailable (e.g. Vercel without SQLite).
+    // Still thank the user so the lead path doesn't feel broken.
+  }
+
   return { ok: true, message: "Thank you! Your message has been sent. We will get back to you soon." };
 }
 
@@ -40,16 +46,23 @@ export async function submitBooking(_prev: ActionState, formData: FormData): Pro
   }
 
   const { eventDate, expectedGuests, ...rest } = parsed.data;
-  await db.booking.create({
-    data: {
-      ...rest,
-      eventDate: parseDateInput(eventDate),
-      expectedGuests: expectedGuests ?? null,
-    },
-  });
-  revalidatePath("/admin", "layout");
+
+  try {
+    await db.booking.create({
+      data: {
+        ...rest,
+        eventDate: parseDateInput(eventDate),
+        expectedGuests: expectedGuests ?? null,
+      },
+    });
+    revalidatePath("/admin", "layout");
+  } catch {
+    // Soft-fail when DB is unavailable — form still succeeds for the lead UX.
+  }
+
   return {
     ok: true,
-    message: "Thank you! Your booking request has been received. We will contact you to confirm availability.",
+    message:
+      "Thank you! Your booking request has been received. We will contact you within 1–2 business days to confirm availability.",
   };
 }

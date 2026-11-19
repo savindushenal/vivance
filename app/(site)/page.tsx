@@ -45,8 +45,8 @@ export default async function HomePage() {
                 <Link href="/booking" className="btn-primary">
                   Book the Choir
                 </Link>
-                <Link href="/events" className="btn-ghost">
-                  Explore Events
+                <Link href="#booking-journey" className="btn-ghost">
+                  How booking works
                 </Link>
               </div>
             </div>
@@ -92,28 +92,35 @@ export default async function HomePage() {
               title: "Weddings",
               copy: "Processionals, hymns, and ceremony moments shaped with warmth and polish.",
               image: SITE_IMAGES.group,
+              href: "/booking?type=WEDDING",
             },
             {
               num: "02",
               title: "Private celebrations",
               copy: "Receptions, anniversaries, and gatherings where live harmony sets the tone.",
               image: SITE_IMAGES.candid,
+              href: "/booking?type=OTHER",
             },
             {
               num: "03",
               title: "Sacred & corporate",
               copy: "Services, galas, and formal occasions that call for refined choral sound.",
               image: SITE_IMAGES.performance,
+              href: "/booking?type=CHURCH_SERVICE",
             },
           ].map((item) => (
-            <div key={item.title} className="occasion-card !p-0 overflow-hidden">
+            <Link
+              key={item.title}
+              href={item.href}
+              className="occasion-card group !p-0 overflow-hidden transition hover:-translate-y-0.5"
+            >
               <div className="relative aspect-[16/10]">
                 <Image
                   src={item.image}
                   alt={item.title}
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover"
+                  className="object-cover transition duration-500 group-hover:scale-[1.03]"
                 />
               </div>
               <div className="p-5">
@@ -124,8 +131,11 @@ export default async function HomePage() {
                   {item.title}
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-[var(--color-ink)]/60">{item.copy}</p>
+                <p className="mt-3 font-mono text-[0.65rem] uppercase tracking-[0.14em] text-[var(--color-navy)]/55">
+                  Start this request →
+                </p>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
 
@@ -200,31 +210,32 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
+      <section id="booking-journey" className="mx-auto max-w-6xl scroll-mt-24 px-4 py-10 sm:px-6 sm:py-14">
         <p className="section-rule">Your booking journey</p>
         <h2 className="mt-5 max-w-3xl font-serif text-3xl font-extrabold uppercase tracking-tight text-[var(--color-navy)] sm:text-4xl">
-          Progress you can feel from inquiry to performance
+          Three steps from interest to a confirmed choir
         </h2>
         <p className="mt-4 max-w-2xl text-base leading-relaxed text-[var(--color-ink)]/65">
-          Every booking follows a clear path, with room for the music and moments that matter to you.
+          Start with the occasion. We qualify the date and details, then confirm repertoire and ensemble
+          size before anything is locked.
         </p>
 
         <div className="mt-12 grid gap-4 md:grid-cols-3">
           {[
             {
               step: "01",
-              title: "Tell us the occasion",
-              copy: "Share the date, venue, and the moments you want sung — ceremony, reception, or both.",
+              title: "Pick occasion & date",
+              copy: "Weddings, services, corporate, or another celebration — choose what fits and an open date.",
             },
             {
               step: "02",
-              title: "Shape the music",
-              copy: "We propose repertoire and ensemble size to fit your space, tone, and timeline.",
+              title: "Share the brief",
+              copy: "Venue, timing, guest count, and the moments you want sung. Better briefs mean better replies.",
             },
             {
               step: "03",
-              title: "We arrive ready",
-              copy: "Polished voices, on time, tuned to the room — so the day feels complete.",
+              title: "We confirm & prepare",
+              copy: "We reply in 1–2 business days, lock availability, shape repertoire, and arrive ready.",
             },
           ].map((item) => (
             <div key={item.step} className="stat-light">
@@ -237,6 +248,12 @@ export default async function HomePage() {
               <p className="mt-2 text-sm leading-relaxed text-[var(--color-ink)]/60">{item.copy}</p>
             </div>
           ))}
+        </div>
+
+        <div className="mt-10">
+          <Link href="/booking" className="btn-primary">
+            Start your booking request
+          </Link>
         </div>
       </section>
 

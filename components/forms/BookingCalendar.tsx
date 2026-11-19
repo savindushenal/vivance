@@ -43,6 +43,7 @@ type Props = {
   defaultValue?: string;
   error?: string[] | string;
   id?: string;
+  onChange?: (value: string) => void;
 };
 
 export function BookingCalendar({
@@ -52,6 +53,7 @@ export function BookingCalendar({
   defaultValue = "",
   error,
   id = "eventDate",
+  onChange,
 }: Props) {
   const min = parseYmd(minDate);
   const unavailable = useMemo(() => new Set(unavailableDates), [unavailableDates]);
@@ -61,6 +63,11 @@ export function BookingCalendar({
   const [selected, setSelected] = useState(initial);
   const [viewYear, setViewYear] = useState(seed.y);
   const [viewMonth, setViewMonth] = useState(seed.m);
+
+  function selectDate(ymd: string) {
+    setSelected(ymd);
+    onChange?.(ymd);
+  }
 
   const message = Array.isArray(error) ? error[0] : error;
   const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
@@ -84,7 +91,8 @@ export function BookingCalendar({
 
   return (
     <div className="space-y-1.5">
-      <input type="hidden" id={id} name={name} value={selected} required />
+      {/* When onChange is used, the parent owns the form field. */}
+      {!onChange && <input type="hidden" id={id} name={name} value={selected} required />}
 
       <div
         className={cn(
@@ -139,7 +147,7 @@ export function BookingCalendar({
                 key={cell.key}
                 type="button"
                 disabled={disabled}
-                onClick={() => setSelected(cell.ymd!)}
+                onClick={() => selectDate(cell.ymd!)}
                 aria-pressed={isSelected}
                 aria-label={
                   isBusy
