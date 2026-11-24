@@ -4,14 +4,12 @@ A choir website built with Next.js (App Router), Tailwind CSS and Prisma + SQLit
 
 ## Features
 
-**Public website**
+**Public website** (simple one-page choir site)
 
-- Home page with hero, upcoming events and next schedule items
-- About page (text editable in the CMS)
-- Schedule of rehearsals, services and performances, grouped by month
-- Upcoming events, past events archive (grouped by year) and event detail pages with photo galleries
-- Booking request form (weddings, services, concerts, ...)
-- Contact / inquiry form
+- Full-bleed hero with brand, one headline and clear CTAs
+- Our choir story
+- Occasions (weddings, celebrations, sacred & corporate)
+- Booking request form + contact details
 - Basic spam protection (honeypot field) and server-side validation (Zod)
 
 **Admin CMS** at `/admin`

@@ -18,40 +18,40 @@ export const CONTENT_FIELDS = {
     label: "Tagline",
     type: "text",
     group: "General",
-    defaultValue: "The Living Tempo",
+    defaultValue: "Choir for hire",
   },
   heroTitle: {
     label: "Hero title",
     type: "text",
     group: "Home page",
-    defaultValue: "Voices for weddings, celebrations & occasions",
+    defaultValue: "A choir for your occasion",
   },
   heroSubtitle: {
     label: "Hero subtitle",
     type: "textarea",
     group: "Home page",
     defaultValue:
-      "A commercial choir for hire — elegant, polished and present for the moments that deserve live harmony.",
+      "We sing for weddings, celebrations and sacred services — live voices, ready to book.",
   },
   homeIntro: {
     label: "Home introduction",
     type: "textarea",
     group: "Home page",
     defaultValue:
-      "From intimate ceremonies to grand receptions, Vivàce brings a living tempo to your occasion. Hire us for weddings, private events, sacred services and corporate gatherings.",
+      "Vivàce is a choir for hire. Pick your occasion, share the date, and we bring live harmony to your day.",
   },
   aboutTitle: {
     label: "About title",
     type: "text",
     group: "About page",
-    defaultValue: "About Vivàce",
+    defaultValue: "Who we are",
   },
   aboutText: {
     label: "About text",
     type: "textarea",
     group: "About page",
     defaultValue:
-      "Vivàce is a commercial choir built for occasions that deserve live harmony — weddings, celebrations, sacred services and private events.\n\nOur repertoire spans centuries: Renaissance motets and classical masterworks alongside gospel, spirituals and modern arrangements, shaped to fit the tone of your day.\n\nWhether you need a processional, a ceremony set, or a reception performance, we bring polish, warmth and a living tempo to every booking.",
+      "At Vivàce, we believe live voices make an occasion feel complete. We are a choir for hire — built for weddings, celebrations, sacred services and private events.\n\nEvery booking is shaped around your day: the room, the moment, and the music that belongs there. Clear, warm and ready when you need us.",
   },
   rehearsalInfo: {
     label: "Booking note (internal / optional)",

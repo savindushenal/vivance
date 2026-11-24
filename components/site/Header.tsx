@@ -7,17 +7,15 @@ import { SmoothHashLink } from "@/components/site/SmoothHashLink";
 import { cn } from "@/lib/utils";
 
 const NAV = [
+  { href: "/#about", label: "Our choir" },
   { href: "/#occasions", label: "Occasions" },
-  { href: "/#about", label: "About" },
-  { href: "/#gallery", label: "Gallery" },
-  { href: "/#booking", label: "Book" },
+  { href: "/#contact", label: "Contact" },
 ];
 
 export function Header({ choirName }: { choirName: string }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [hash, setHash] = useState("");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -28,51 +26,48 @@ export function Header({ choirName }: { choirName: string }) {
 
   useEffect(() => {
     setOpen(false);
-    setHash(typeof window !== "undefined" ? window.location.hash : "");
   }, [pathname]);
 
-  useEffect(() => {
-    const onHash = () => setHash(window.location.hash);
-    window.addEventListener("hashchange", onHash);
-    return () => window.removeEventListener("hashchange", onHash);
-  }, []);
+  const onDark = !scrolled && !open;
 
   return (
     <header
       className={cn(
-        "sticky top-0 z-40 transition-all duration-300",
-        scrolled || open ? "bg-[var(--color-pearl)]/95 backdrop-blur-md" : "bg-[var(--color-pearl)]",
+        "fixed inset-x-0 top-0 z-40 transition-colors duration-300",
+        onDark ? "bg-transparent" : "bg-[var(--color-pearl)]/95 backdrop-blur-md",
       )}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
-        <BrandMark choirName={choirName} compact />
+        <BrandMark choirName={choirName} compact light={onDark} />
 
-        <nav className="hidden items-center gap-1 lg:flex">
-          {NAV.map((item) => {
-            const active = pathname === "/" && hash === item.href.replace("/#", "#");
-            return (
-              <SmoothHashLink
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  "rounded-full px-3.5 py-2 text-sm font-medium tracking-wide transition",
-                  active
-                    ? "bg-[var(--color-navy)] text-white"
-                    : "text-[var(--color-ink)]/70 hover:bg-black/5 hover:text-[var(--color-navy)]",
-                )}
-              >
-                {item.label}
-              </SmoothHashLink>
-            );
-          })}
-          <SmoothHashLink href="/#booking" className="btn-primary ml-2">
-            Book the Choir
+        <nav className="hidden items-center gap-1 md:flex">
+          {NAV.map((item) => (
+            <SmoothHashLink
+              key={item.href}
+              href={item.href}
+              className={cn(
+                "px-3.5 py-2 text-sm font-medium tracking-wide transition",
+                onDark
+                  ? "text-white/80 hover:text-white"
+                  : "text-[var(--color-ink)]/70 hover:text-[var(--color-navy)]",
+              )}
+            >
+              {item.label}
+            </SmoothHashLink>
+          ))}
+          <SmoothHashLink href="/#book" className="btn-primary ml-3">
+            Book us
           </SmoothHashLink>
         </nav>
 
         <button
           type="button"
-          className="flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-navy)] text-[var(--color-champagne-soft)] lg:hidden"
+          className={cn(
+            "flex h-11 w-11 items-center justify-center md:hidden",
+            onDark
+              ? "bg-white/15 text-white"
+              : "bg-[var(--color-navy)] text-[var(--color-gold-soft)]",
+          )}
           aria-label="Toggle menu"
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
@@ -88,23 +83,23 @@ export function Header({ choirName }: { choirName: string }) {
       </div>
 
       {open && (
-        <nav className="border-t border-[var(--color-navy)]/10 px-4 py-4 lg:hidden">
+        <nav className="border-t border-[var(--color-navy)]/10 bg-[var(--color-pearl)] px-4 py-4 md:hidden">
           {NAV.map((item) => (
             <SmoothHashLink
               key={item.href}
               href={item.href}
               onClick={() => setOpen(false)}
-              className="mt-1 block rounded-xl px-3 py-3 text-base font-medium text-[var(--color-ink)]"
+              className="mt-1 block px-3 py-3 text-base font-medium text-[var(--color-ink)]"
             >
               {item.label}
             </SmoothHashLink>
           ))}
           <SmoothHashLink
-            href="/#booking"
+            href="/#book"
             onClick={() => setOpen(false)}
             className="btn-primary mt-3 w-full"
           >
-            Book the Choir
+            Book us
           </SmoothHashLink>
         </nav>
       )}

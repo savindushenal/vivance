@@ -3,37 +3,37 @@
 import { useEffect } from "react";
 
 function scrollToBooking() {
-  const el = document.getElementById("booking");
+  const el = document.getElementById("book");
   if (!el) return false;
   el.scrollIntoView({ behavior: "smooth", block: "start" });
   return true;
 }
 
 /**
- * Scrolls to #booking when:
+ * Scrolls to #book when:
  * - URL has ?type=… (occasion deep-link)
- * - URL hash is #booking
+ * - URL hash is #book or #booking
  */
 export function ScrollToBooking({ type }: { type?: string }) {
   useEffect(() => {
     function shouldScroll() {
       if (type) return true;
-      return window.location.hash === "#booking";
+      const hash = window.location.hash;
+      return hash === "#book" || hash === "#booking";
     }
 
     function run() {
       if (!shouldScroll()) return;
-      if (window.location.hash !== "#booking") {
+      if (window.location.hash !== "#book") {
         window.history.replaceState(
           null,
           "",
-          `${window.location.pathname}${window.location.search}#booking`,
+          `${window.location.pathname}${window.location.search}#book`,
         );
       }
       scrollToBooking();
     }
 
-    // Layout / images can shift the target — retry a few times.
     const timers = [0, 100, 350, 700].map((ms) => window.setTimeout(run, ms));
     window.addEventListener("hashchange", run);
 
