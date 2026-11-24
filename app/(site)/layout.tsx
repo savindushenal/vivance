@@ -8,8 +8,10 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata(): Promise<Metadata> {
   const content = await getSiteContent();
   return {
-    title: { default: content.choirName, template: `%s | ${content.choirName}` },
-    description: content.heroSubtitle,
+    title: { default: `${content.choirName} — Choir for hire`, template: `%s | ${content.choirName}` },
+    description:
+      content.heroSubtitle ||
+      "A choir for hire. We sing for weddings, celebrations, sacred services and private events.",
   };
 }
 
@@ -18,7 +20,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
   return (
     <div className="flex min-h-screen flex-col">
       <Header choirName={content.choirName} />
-      <main className="flex-1 pt-0">{children}</main>
+      <main className="flex-1">{children}</main>
       <Footer content={content} />
     </div>
   );

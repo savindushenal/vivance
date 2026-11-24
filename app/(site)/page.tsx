@@ -5,7 +5,28 @@ import { SmoothHashLink } from "@/components/site/SmoothHashLink";
 import { getSiteContent } from "@/lib/content";
 import { toDateInput } from "@/lib/dates";
 import { getUnavailableBookingDates } from "@/lib/queries";
-import { GALLERY_IMAGES, SITE_IMAGES } from "@/lib/site-images";
+import { SITE_IMAGES } from "@/lib/site-images";
+
+const OCCASIONS = [
+  {
+    title: "Weddings",
+    copy: "Ceremony, signing and reception moments with live harmony.",
+    image: SITE_IMAGES.group,
+    href: "/?type=WEDDING#book",
+  },
+  {
+    title: "Celebrations",
+    copy: "Anniversaries, private parties and gatherings that need a living tempo.",
+    image: SITE_IMAGES.candid,
+    href: "/?type=OTHER#book",
+  },
+  {
+    title: "Sacred & corporate",
+    copy: "Services, memorials, galas and formal programmes.",
+    image: SITE_IMAGES.performance,
+    href: "/?type=CHURCH_SERVICE#book",
+  },
+];
 
 export default async function HomePage({
   searchParams,
@@ -24,261 +45,128 @@ export default async function HomePage({
     <>
       <ScrollToBooking type={type} />
 
-      {/* Hero */}
-      <section className="px-4 pb-6 pt-2 sm:px-6">
-        <div className="hero-panel mx-auto max-w-6xl">
-          <Image
-            src={SITE_IMAGES.hero}
-            alt={`${content.choirName} choir`}
-            fill
-            priority
-            quality={92}
-            sizes="(max-width: 1152px) 100vw, 1152px"
-            className="hero-photo"
-          />
-          <div className="hero-veil absolute inset-0" aria-hidden />
+      {/* Hero — brand first, one idea */}
+      <section className="relative min-h-[100svh] overflow-hidden bg-[var(--color-navy-deep)] text-white">
+        <Image
+          src={SITE_IMAGES.hero}
+          alt={`${content.choirName} choir`}
+          fill
+          priority
+          quality={92}
+          sizes="100vw"
+          className="hero-photo object-cover object-[center_28%]"
+        />
+        <div
+          className="absolute inset-0 bg-gradient-to-t from-[var(--color-navy-deep)] via-[var(--color-navy-deep)]/55 to-[var(--color-navy-deep)]/25"
+          aria-hidden
+        />
 
-          <div className="relative flex min-h-[min(78vh,44rem)] flex-col justify-end px-5 py-8 sm:px-8 sm:py-10 md:px-12 md:py-14">
-            <div className="max-w-2xl">
-              <p className="badge-pill animate-fade-up text-white/90">
-                <span className="badge-dot" />
-                {content.tagline || "The Living Tempo"}
-              </p>
-
-              <h1 className="animate-fade-up-delay-1 mt-4 max-w-3xl font-serif text-3xl font-extrabold uppercase leading-[0.98] tracking-tight sm:text-4xl md:text-5xl lg:text-[3.5rem]">
-                <span className="text-[var(--color-champagne)]">Find your harmony.</span>{" "}
-                <span className="text-white">Hire the choir.</span>
-              </h1>
-
-              <p className="animate-fade-up-delay-2 mt-4 max-w-xl text-sm leading-relaxed text-white/75 sm:text-base">
-                {content.heroSubtitle}
-              </p>
-
-              <div className="animate-fade-up-delay-3 mt-6 flex flex-wrap items-center gap-3 sm:mt-7">
-                <SmoothHashLink href="#booking" className="btn-primary">
-                  Book the Choir
-                </SmoothHashLink>
-                <SmoothHashLink href="#about" className="btn-ghost">
-                  About Vivàce
-                </SmoothHashLink>
-              </div>
-            </div>
+        <div className="relative mx-auto flex min-h-[100svh] max-w-6xl flex-col justify-end px-4 pb-16 pt-28 sm:px-6 sm:pb-20">
+          <p className="animate-rise font-[family-name:var(--font-display)] text-5xl font-semibold tracking-[0.06em] text-white sm:text-6xl md:text-7xl">
+            VIV<span className="text-[var(--color-gold-soft)]">À</span>CE
+          </p>
+          <span className="accent-line mt-5" />
+          <h1 className="animate-rise-1 mt-6 max-w-2xl font-[family-name:var(--font-display)] text-3xl font-medium leading-tight text-white sm:text-4xl md:text-5xl">
+            A choir for your occasion
+          </h1>
+          <p className="animate-rise-2 mt-4 max-w-lg text-base leading-relaxed text-white/75 sm:text-lg">
+            We sing for weddings, celebrations and sacred services — live voices, ready to book.
+          </p>
+          <div className="animate-rise-3 mt-8 flex flex-wrap gap-3">
+            <SmoothHashLink href="#book" className="btn-primary">
+              Book the choir
+            </SmoothHashLink>
+            <SmoothHashLink href="#about" className="btn-ghost">
+              Our story
+            </SmoothHashLink>
           </div>
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-6xl gap-4 px-4 py-4 sm:grid-cols-3 sm:px-6">
-        <div className="stat-dark">
-          <p className="font-serif text-5xl font-extrabold tracking-tight text-[var(--color-champagne)]">03</p>
-          <p className="mt-3 text-sm font-semibold text-white">Occasions we sing for</p>
-          <p className="mt-1 text-sm text-white/55">Weddings, private celebrations, sacred & corporate</p>
-        </div>
-        <div className="stat-dark">
-          <p className="font-serif text-5xl font-extrabold tracking-tight text-[var(--color-champagne)]">Live</p>
-          <p className="mt-3 text-sm font-semibold text-white">Ensemble presence</p>
-          <p className="mt-1 text-sm text-white/55">Polished voices shaped for the room you are in</p>
-        </div>
-        <div className="stat-light">
-          <p className="font-serif text-4xl font-extrabold uppercase tracking-tight text-[var(--color-navy)]">
-            For hire
-          </p>
-          <p className="mt-3 text-sm font-semibold text-[var(--color-navy)]">Bookings open</p>
-          <p className="mt-1 text-sm text-[var(--color-ink)]/55">
-            Tell us the date, venue, and moments that need music
-          </p>
-        </div>
-      </section>
-
-      {/* Occasions */}
-      <section id="occasions" className="mx-auto max-w-6xl scroll-mt-24 px-4 py-16 sm:px-6 sm:py-20">
-        <p className="section-rule">Explore the sound</p>
-        <h2 className="mt-5 max-w-3xl font-serif text-3xl font-extrabold uppercase tracking-tight text-[var(--color-navy)] sm:text-4xl md:text-5xl">
-          One choir. A living tempo for every occasion.
-        </h2>
-        <p className="mt-4 max-w-2xl text-base leading-relaxed text-[var(--color-ink)]/65 sm:text-lg">
-          {content.homeIntro}
-        </p>
-
-        <div className="mt-12 grid gap-4 md:grid-cols-3">
-          {[
-            {
-              num: "01",
-              title: "Weddings",
-              copy: "Processionals, hymns, and ceremony moments shaped with warmth and polish.",
-              image: SITE_IMAGES.group,
-              href: "/?type=WEDDING",
-            },
-            {
-              num: "02",
-              title: "Private celebrations",
-              copy: "Receptions, anniversaries, and gatherings where live harmony sets the tone.",
-              image: SITE_IMAGES.candid,
-              href: "/?type=OTHER",
-            },
-            {
-              num: "03",
-              title: "Sacred & corporate",
-              copy: "Services, galas, and formal occasions that call for refined choral sound.",
-              image: SITE_IMAGES.performance,
-              href: "/?type=CHURCH_SERVICE",
-            },
-          ].map((item) => (
-            <SmoothHashLink
-              key={item.title}
-              href={item.href}
-              className="occasion-card group !p-0 overflow-hidden transition hover:-translate-y-0.5"
-            >
-              <div className="relative aspect-[16/10]">
-                <Image
-                  src={item.image}
-                  alt={item.title}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover transition duration-500 group-hover:scale-[1.03]"
-                />
-              </div>
-              <div className="p-5">
-                <p className="font-mono text-xs font-medium tracking-[0.16em] text-[var(--color-champagne-deep)]">
-                  {item.num}
-                </p>
-                <h3 className="mt-2 font-serif text-2xl font-extrabold tracking-tight text-[var(--color-navy)]">
-                  {item.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-[var(--color-ink)]/60">{item.copy}</p>
-                <p className="mt-3 font-mono text-[0.65rem] uppercase tracking-[0.14em] text-[var(--color-navy)]/55">
-                  Start this request →
-                </p>
-              </div>
-            </SmoothHashLink>
-          ))}
-        </div>
-      </section>
-
-      {/* About */}
-      <section id="about" className="scroll-mt-24 px-4 py-6 sm:px-6">
-        <div className="panel mx-auto grid max-w-6xl overflow-hidden bg-[var(--color-navy)] text-white lg:grid-cols-2">
-          <div className="relative min-h-[18rem] lg:min-h-full">
+      {/* Our choir — one story, like a simple restaurant intro */}
+      <section id="about" className="scroll-mt-24 bg-[var(--color-pearl)] px-4 py-20 sm:px-6 sm:py-28">
+        <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <div className="relative aspect-[4/5] overflow-hidden sm:aspect-[5/6]">
             <Image
               src={SITE_IMAGES.about}
               alt={`${content.choirName} ensemble`}
               fill
               quality={88}
               sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover object-center"
+              className="object-cover"
             />
           </div>
-          <div className="flex flex-col justify-center px-6 py-10 sm:px-10 sm:py-14">
-            <p className="badge-pill text-white/85">
-              <span className="badge-dot" />
-              About {content.choirName}
-            </p>
-            <h2 className="mt-5 font-serif text-3xl font-extrabold uppercase tracking-tight sm:text-4xl">
-              {content.aboutTitle || "A place where every note moves the room"}
+          <div>
+            <p className="section-label">Our choir</p>
+            <h2 className="mt-4 font-[family-name:var(--font-display)] text-4xl font-semibold tracking-tight text-[var(--color-navy)] sm:text-5xl">
+              {content.aboutTitle || "Who we are"}
             </h2>
-            <div className="mt-4 space-y-4 text-sm leading-relaxed text-white/65 sm:text-base">
+            <div className="mt-6 space-y-4 text-base leading-relaxed text-[var(--color-ink)]/70 sm:text-lg">
               {aboutParagraphs.slice(0, 2).map((p, i) => (
                 <p key={i} className="whitespace-pre-line">
                   {p}
                 </p>
               ))}
             </div>
-            <div className="mt-8">
-              <SmoothHashLink href="#booking" className="btn-primary">
-                Book the Choir
-              </SmoothHashLink>
-            </div>
+            <SmoothHashLink href="#book" className="btn-outline mt-8">
+              Book us
+            </SmoothHashLink>
           </div>
         </div>
       </section>
 
-      {/* Gallery */}
-      <section id="gallery" className="mx-auto max-w-6xl scroll-mt-24 px-4 py-16 sm:px-6 sm:py-20">
-        <p className="section-rule">Inside Vivàce</p>
-        <h2 className="mt-5 max-w-3xl font-serif text-3xl font-extrabold uppercase tracking-tight text-[var(--color-navy)] sm:text-4xl">
-          A little look inside our music community
-        </h2>
-        <p className="mt-4 max-w-2xl text-base leading-relaxed text-[var(--color-ink)]/65">
-          From focused practice to shared performances, explore the moments that make Vivàce special.
-        </p>
-        <div className="mt-10 grid auto-rows-[12rem] gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:auto-rows-[14rem]">
-          {GALLERY_IMAGES.map((img, i) => (
-            <div
-              key={img.src}
-              className={`group relative overflow-hidden rounded-[1.5rem] ${
-                i === 0 || i === 3 ? "sm:row-span-2 sm:min-h-[28rem]" : ""
-              }`}
-            >
-              <Image
-                src={img.src}
-                alt={img.alt}
-                fill
-                sizes="(max-width: 1024px) 50vw, 33vw"
-                className="object-cover transition duration-500 group-hover:scale-[1.03]"
-              />
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent px-4 py-4">
-                <p className="font-mono text-[0.65rem] uppercase tracking-[0.14em] text-white/90">{img.label}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Journey */}
-      <section id="journey" className="mx-auto max-w-6xl scroll-mt-24 px-4 py-10 sm:px-6 sm:py-14">
-        <p className="section-rule">Your booking journey</p>
-        <h2 className="mt-5 max-w-3xl font-serif text-3xl font-extrabold uppercase tracking-tight text-[var(--color-navy)] sm:text-4xl">
-          Three steps from interest to a confirmed choir
-        </h2>
-        <p className="mt-4 max-w-2xl text-base leading-relaxed text-[var(--color-ink)]/65">
-          Start with the occasion. We qualify the date and details, then confirm repertoire and ensemble
-          size before anything is locked.
-        </p>
-
-        <div className="mt-12 grid gap-4 md:grid-cols-3">
-          {[
-            {
-              step: "01",
-              title: "Pick occasion & date",
-              copy: "Weddings, services, corporate, or another celebration — choose what fits and an open date.",
-            },
-            {
-              step: "02",
-              title: "Share the brief",
-              copy: "Venue, timing, guest count, and the moments you want sung. Better briefs mean better replies.",
-            },
-            {
-              step: "03",
-              title: "We confirm & prepare",
-              copy: "We reply in 1–2 business days, lock availability, shape repertoire, and arrive ready.",
-            },
-          ].map((item) => (
-            <div key={item.step} className="stat-light">
-              <p className="font-serif text-4xl font-extrabold text-[var(--color-champagne-deep)]">
-                {item.step}
-              </p>
-              <h3 className="mt-4 font-serif text-xl font-bold tracking-tight text-[var(--color-navy)]">
-                {item.title}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-[var(--color-ink)]/60">{item.copy}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Booking */}
-      <section id="booking" className="scroll-mt-28 px-4 py-10 [overflow-anchor:none] sm:px-6 sm:py-16">
+      {/* Occasions — clear “menu” of what we offer */}
+      <section id="occasions" className="scroll-mt-24 bg-[var(--color-sand)] px-4 py-20 sm:px-6 sm:py-28">
         <div className="mx-auto max-w-6xl">
-          <p className="section-rule">Book the choir</p>
-          <h2 className="mt-5 max-w-3xl font-serif text-3xl font-extrabold uppercase tracking-tight text-[var(--color-navy)] sm:text-4xl">
-            Your first note starts here
+          <p className="section-label">What we sing for</p>
+          <h2 className="mt-4 max-w-2xl font-[family-name:var(--font-display)] text-4xl font-semibold tracking-tight text-[var(--color-navy)] sm:text-5xl">
+            Three clear occasions. One choir.
           </h2>
-          <p className="mt-4 max-w-2xl text-base leading-relaxed text-[var(--color-ink)]/65">
-            Occasion, details, and contact in three short steps. A request does not lock the date until we
-            confirm.
+          <p className="mt-4 max-w-xl text-base leading-relaxed text-[var(--color-ink)]/65 sm:text-lg">
+            Pick the moment that fits. Tell us the date. We handle the rest.
           </p>
 
-          <div className="mt-10 grid gap-8 lg:grid-cols-3">
-            <div className="rounded-[1.5rem] border border-[var(--color-navy)]/10 bg-white p-6 sm:p-8 lg:col-span-2">
+          <div className="mt-14 grid gap-8 md:grid-cols-3">
+            {OCCASIONS.map((item) => (
+              <SmoothHashLink key={item.title} href={item.href} className="group block">
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover transition duration-500 group-hover:scale-[1.03]"
+                  />
+                </div>
+                <h3 className="mt-5 font-[family-name:var(--font-display)] text-3xl font-semibold text-[var(--color-navy)]">
+                  {item.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-[var(--color-ink)]/80">{item.copy}</p>
+                <p className="mt-3 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--color-gold-deep)]">
+                  Start booking →
+                </p>
+              </SmoothHashLink>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Book + contact */}
+      <section
+        id="book"
+        className="scroll-mt-28 bg-[var(--color-pearl)] px-4 py-20 sm:px-6 sm:py-28"
+      >
+        <div id="contact" className="mx-auto max-w-6xl scroll-mt-28">
+          <p className="section-label">Book the choir</p>
+          <h2 className="mt-4 max-w-2xl font-[family-name:var(--font-display)] text-4xl font-semibold tracking-tight text-[var(--color-navy)] sm:text-5xl">
+            Tell us about your day
+          </h2>
+          <p className="mt-4 max-w-xl text-base leading-relaxed text-[var(--color-ink)]/65 sm:text-lg">
+            Occasion, date and a few details. A request does not lock the date until we confirm.
+          </p>
+
+          <div className="mt-12 grid gap-10 lg:grid-cols-[1.6fr_1fr]">
+            <div className="border border-[var(--color-navy)]/10 bg-white p-6 sm:p-8">
               <BookingForm
                 minDate={toDateInput(new Date())}
                 unavailableDates={unavailableDates}
@@ -287,34 +175,53 @@ export default async function HomePage({
                 contactPhone={content.contactPhone}
               />
             </div>
-            <aside className="space-y-6 text-sm text-[var(--color-ink)]/70">
-              <div className="rounded-[1.5rem] bg-[var(--color-navy)] px-5 py-6 text-white">
-                <h3 className="font-serif text-xl font-semibold">What makes a strong request</h3>
-                <ul className="mt-4 space-y-3 text-white/70">
-                  <li>Occasion + preferred date</li>
-                  <li>Venue and approximate guest count</li>
-                  <li>Moments you want sung</li>
-                  <li>A phone number we can reach</li>
-                </ul>
+
+            <aside className="space-y-8">
+              <div className="bg-[var(--color-navy)] px-6 py-7 text-white">
+                <h3 className="font-[family-name:var(--font-display)] text-2xl font-semibold">
+                  How booking works
+                </h3>
+                <ol className="mt-5 space-y-4 text-sm text-white/70">
+                  <li>
+                    <span className="font-semibold text-[var(--color-gold-soft)]">1.</span> Choose
+                    occasion and date
+                  </li>
+                  <li>
+                    <span className="font-semibold text-[var(--color-gold-soft)]">2.</span> Share venue
+                    and details
+                  </li>
+                  <li>
+                    <span className="font-semibold text-[var(--color-gold-soft)]">3.</span> We reply in
+                    1–2 business days
+                  </li>
+                </ol>
               </div>
-              <div id="contact" className="scroll-mt-24 rounded-[1.5rem] border border-[var(--color-navy)]/10 bg-white px-5 py-6">
-                <h3 className="font-serif text-xl font-semibold text-[var(--color-navy)]">Contact</h3>
+
+              <div className="border border-[var(--color-navy)]/10 bg-white px-6 py-7">
+                <h3 className="font-[family-name:var(--font-display)] text-2xl font-semibold text-[var(--color-navy)]">
+                  Contact
+                </h3>
                 {content.contactAddress && (
-                  <p className="mt-3 whitespace-pre-line">{content.contactAddress}</p>
+                  <p className="mt-4 whitespace-pre-line text-sm leading-relaxed text-[var(--color-ink)]/70">
+                    {content.contactAddress}
+                  </p>
                 )}
                 {content.contactPhone && (
-                  <p className="mt-3">
+                  <p className="mt-4">
                     <a
                       href={`tel:${content.contactPhone.replace(/\s+/g, "")}`}
-                      className="link-champagne"
+                      className="text-base font-semibold text-[var(--color-navy)] underline-offset-4 hover:underline"
                     >
                       {content.contactPhone}
                     </a>
                   </p>
                 )}
                 {content.contactEmail && (
-                  <p className="mt-1">
-                    <a href={`mailto:${content.contactEmail}`} className="link-champagne">
+                  <p className="mt-2">
+                    <a
+                      href={`mailto:${content.contactEmail}`}
+                      className="text-sm text-[var(--color-ink)]/70 underline-offset-4 hover:underline"
+                    >
                       {content.contactEmail}
                     </a>
                   </p>
