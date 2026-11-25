@@ -86,14 +86,14 @@ export default async function HomePage({
       {/* Our choir — one story, like a simple restaurant intro */}
       <section id="about" className="scroll-mt-24 bg-[var(--color-pearl)] px-4 py-20 sm:px-6 sm:py-28">
         <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2 lg:gap-16">
-          <div className="relative aspect-[4/5] overflow-hidden sm:aspect-[5/6]">
+          <div className="relative aspect-[16/10] overflow-hidden lg:aspect-[5/4]">
             <Image
               src={SITE_IMAGES.about}
               alt={`${content.choirName} ensemble`}
               fill
               quality={88}
               sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover"
+              className="object-cover object-[center_35%]"
             />
           </div>
           <div>
