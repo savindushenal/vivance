@@ -42,9 +42,9 @@ export function Footer({ content }: { content: SiteContent }) {
               </Link>
             </li>
             <li>
-              <Link href="/contact" className="hover:text-white">
+              <SmoothHashLink href="/#contact" className="hover:text-white">
                 Contact
-              </Link>
+              </SmoothHashLink>
             </li>
             <li>
               <SmoothHashLink href="/#socials" className="hover:text-white">
