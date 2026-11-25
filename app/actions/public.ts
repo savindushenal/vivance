@@ -45,19 +45,20 @@ export async function submitBooking(_prev: ActionState, formData: FormData): Pro
     return { ok: false, message: "Please fix the errors below.", errors: fieldErrors(parsed.error), values };
   }
 
-  const { eventDate, expectedGuests, ...rest } = parsed.data;
+  const { eventDate, expectedGuests, organization, ...rest } = parsed.data;
 
   try {
     await db.booking.create({
       data: {
         ...rest,
+        organization: organization ?? null,
         eventDate: parseDateInput(eventDate),
         expectedGuests: expectedGuests ?? null,
       },
     });
     revalidatePath("/admin", "layout");
   } catch {
-    // Soft-fail when DB is unavailable — form still succeeds for the lead UX.
+    // Soft-fail when DB is unavailable; form still succeeds for the lead UX.
   }
 
   return {
