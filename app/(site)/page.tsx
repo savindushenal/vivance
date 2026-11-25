@@ -11,7 +11,7 @@ const OCCASIONS = [
   {
     title: "Weddings",
     copy: "Ceremony, signing and reception moments with live harmony.",
-    image: SITE_IMAGES.group,
+    image: SITE_IMAGES.wedding,
     href: "/?type=WEDDING#book",
   },
   {
@@ -45,41 +45,62 @@ export default async function HomePage({
     <>
       <ScrollToBooking type={type} />
 
-      {/* Hero — brand first, one idea */}
-      <section className="relative min-h-[100svh] overflow-hidden bg-[var(--color-navy-deep)] text-white">
-        <Image
-          src={SITE_IMAGES.hero}
-          alt={`${content.choirName} choir`}
-          fill
-          priority
-          quality={92}
-          sizes="100vw"
-          className="hero-photo object-cover object-[center_28%]"
-        />
-        <div
-          className="absolute inset-0 bg-gradient-to-t from-[var(--color-navy-deep)] via-[var(--color-navy-deep)]/55 to-[var(--color-navy-deep)]/25"
-          aria-hidden
-        />
+      {/* Hero — brand first, full-bleed, responsive */}
+      <section className="hero-stage relative isolate min-h-[100svh] overflow-hidden text-white">
+        <div className="hero-atmosphere" aria-hidden />
 
-        <div className="relative mx-auto flex min-h-[100svh] max-w-6xl flex-col justify-end px-4 pb-16 pt-28 sm:px-6 sm:pb-20">
-          <p className="animate-rise font-[family-name:var(--font-display)] text-5xl font-semibold tracking-[0.06em] text-white sm:text-6xl md:text-7xl">
-            VIV<span className="text-[var(--color-gold-soft)]">À</span>CE
-          </p>
-          <span className="accent-line mt-5" />
-          <h1 className="animate-rise-1 mt-6 max-w-2xl font-[family-name:var(--font-display)] text-3xl font-medium leading-tight text-white sm:text-4xl md:text-5xl">
-            A choir for your occasion
-          </h1>
-          <p className="animate-rise-2 mt-4 max-w-lg text-base leading-relaxed text-white/75 sm:text-lg">
-            We sing for weddings, celebrations and sacred services — live voices, ready to book.
-          </p>
-          <div className="animate-rise-3 mt-8 flex flex-wrap gap-3">
-            <SmoothHashLink href="#book" className="btn-primary">
-              Book the choir
-            </SmoothHashLink>
-            <SmoothHashLink href="#about" className="btn-ghost">
-              Our story
-            </SmoothHashLink>
+        {/* Mobile hero image (portrait crop, faces lower) */}
+        <div className="absolute inset-0 md:hidden">
+          <Image
+            src={SITE_IMAGES.heroMobile}
+            alt={`${content.choirName} choir`}
+            fill
+            priority
+            quality={88}
+            sizes="100vw"
+            className="hero-photo object-cover object-center"
+          />
+          <div className="hero-veil-mobile absolute inset-0" aria-hidden />
+        </div>
+
+        {/* Desktop hero image (ensemble to the right, room for copy left) */}
+        <div className="absolute inset-0 hidden md:block">
+          <Image
+            src={SITE_IMAGES.hero}
+            alt={`${content.choirName} choir`}
+            fill
+            priority
+            quality={92}
+            sizes="(min-width: 768px) 100vw, 1px"
+            className="hero-photo object-cover object-[80%_center]"
+          />
+          <div className="hero-veil-desktop absolute inset-0" aria-hidden />
+        </div>
+
+        <div className="relative mx-auto flex min-h-[100svh] max-w-6xl flex-col px-4 pb-10 pt-24 sm:px-6 sm:pb-14 md:justify-center md:pb-20 md:pt-28">
+          <div className="mt-2 max-w-xl md:mt-0">
+            <p className="animate-rise font-[family-name:var(--font-display)] text-[2.75rem] font-semibold leading-none tracking-[0.06em] text-white sm:text-6xl md:text-7xl lg:text-[5rem]">
+              VIV<span className="text-[var(--color-gold-soft)]">À</span>CE
+            </p>
+            <span className="accent-line mt-4 sm:mt-5" />
+            <h1 className="animate-rise-1 mt-5 font-[family-name:var(--font-display)] text-[1.65rem] font-medium leading-[1.15] text-white sm:mt-6 sm:text-4xl md:text-5xl">
+              A choir for your occasion
+            </h1>
+            <p className="animate-rise-2 mt-3 max-w-md text-[0.95rem] leading-relaxed text-white/80 sm:mt-4 sm:text-base md:text-lg">
+              We sing for weddings, celebrations and sacred services — live voices, ready to book.
+            </p>
+            <div className="animate-rise-3 mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap">
+              <SmoothHashLink href="#book" className="btn-primary w-full sm:w-auto">
+                Book the choir
+              </SmoothHashLink>
+              <SmoothHashLink href="#about" className="btn-ghost w-full sm:w-auto">
+                Our story
+              </SmoothHashLink>
+            </div>
           </div>
+
+          {/* Spacer so copy stays above the group on phones */}
+          <div className="min-h-[42svh] flex-1 md:hidden" aria-hidden />
         </div>
       </section>
 

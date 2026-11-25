@@ -1,12 +1,14 @@
 /** Tracked, compressed brand photos under /public/brand (uploads/ is gitignored). */
 export const SITE_IMAGES = {
   hero: "/brand/hero-choir.jpg",
+  heroMobile: "/brand/hero-choir-mobile.jpg",
   about: "/brand/site/group.jpg",
   performance: "/brand/site/performance.jpg",
   piano: "/brand/site/piano.jpg",
   squareA: "/brand/site/stage.jpg",
   portrait: "/brand/site/portrait.jpg",
   group: "/brand/site/group.jpg",
+  wedding: "/brand/site/wedding.jpg",
   candid: "/brand/site/candid.jpg",
   moment: "/brand/site/moment.jpg",
   learning: "/brand/site/learning.jpg",
