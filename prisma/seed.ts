@@ -138,7 +138,7 @@ async function main() {
         name: "Ashan Fernando",
         email: "ashan@example.com",
         phone: "+94 77 555 0202",
-        eventType: "WEDDING",
+        eventType: "WEDDING_HOLY_MASS",
         eventDate: daysFromToday(45),
         eventTime: "16:00",
         venue: "All Saints' Church, Borella",

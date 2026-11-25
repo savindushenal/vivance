@@ -11,22 +11,22 @@ import { SITE_IMAGES } from "@/lib/site-images";
 
 const OCCASIONS = [
   {
-    title: "Weddings",
-    copy: "Ceremony, signing and reception moments with live harmony.",
+    title: "Wedding Holy Mass",
+    copy: "Sacred music for the ceremony, from processional to recessional.",
     image: SITE_IMAGES.wedding,
-    href: "/?type=WEDDING#book",
+    href: "/?type=WEDDING_HOLY_MASS#book",
   },
   {
-    title: "Celebrations",
-    copy: "Anniversaries, private parties and gatherings that call for live music.",
+    title: "Wedding Reception",
+    copy: "Live voices for dinner, toasts and celebration moments.",
     image: SITE_IMAGES.candid,
-    href: "/?type=OTHER#book",
+    href: "/?type=WEDDING_RECEPTION#book",
   },
   {
-    title: "Sacred & corporate",
-    copy: "Services, memorials, galas and formal programmes.",
+    title: "Corporate & awards",
+    copy: "Polished performances for nights that need presence.",
     image: SITE_IMAGES.performance,
-    href: "/?type=CHURCH_SERVICE#book",
+    href: "/?type=CORPORATE_AWARDS#book",
   },
 ];
 
@@ -147,7 +147,7 @@ export default async function HomePage({
         <div className="mx-auto max-w-6xl">
           <p className="section-label">What we sing for</p>
           <h2 className="mt-4 max-w-2xl font-[family-name:var(--font-display)] text-4xl font-semibold tracking-tight text-[var(--color-navy)] sm:text-5xl">
-            Three clear occasions. One choir.
+            Clear functions. One choir.
           </h2>
           <p className="mt-4 max-w-xl text-base leading-relaxed text-[var(--color-ink)]/65 sm:text-lg">
             Pick the moment that fits. Tell us the date. We handle the rest.
@@ -189,7 +189,7 @@ export default async function HomePage({
             Tell us about your day
           </h2>
           <p className="mt-4 max-w-xl text-base leading-relaxed text-[var(--color-ink)]/65 sm:text-lg">
-            Share the occasion, date and a few details. A request does not lock the date until we
+            Pick the function, date, time and venue. A request does not lock the date until we
             confirm.
           </p>
 
@@ -212,11 +212,11 @@ export default async function HomePage({
                 <ol className="mt-5 space-y-4 text-sm text-white/70">
                   <li>
                     <span className="font-semibold text-[var(--color-gold-soft)]">1.</span> Choose
-                    occasion and date
+                    function, date and starting time
                   </li>
                   <li>
                     <span className="font-semibold text-[var(--color-gold-soft)]">2.</span> Share venue
-                    and details
+                    and how to reach you
                   </li>
                   <li>
                     <span className="font-semibold text-[var(--color-gold-soft)]">3.</span> We reply in

@@ -47,17 +47,22 @@ export const inquirySchema = z.object({
   message: requiredText("Message", 5000),
 });
 
+const requiredTime = z
+  .string({ error: "Starting time is required" })
+  .trim()
+  .regex(/^([01]\d|2[0-3]):[0-5]\d$/, "Please choose a starting time");
+
 export const bookingSchema = z.object({
-  name: requiredText("Name", 100),
+  name: requiredText("Your name", 100),
   email: z.email("Please enter a valid email"),
-  phone: requiredText("Phone", 30),
+  phone: requiredText("WhatsApp number", 30),
   organization: optionalText(150),
-  eventType: z.enum(BOOKING_EVENT_TYPES, { error: "Please choose an event type" }),
+  eventType: z.enum(BOOKING_EVENT_TYPES, { error: "Please choose a function" }),
   eventDate: dateInput.refine(
     (v) => parseDateInput(v) >= startOfToday(),
-    "Event date must be today or later",
+    "Date must be today or later",
   ),
-  eventTime: timeInput,
+  eventTime: requiredTime,
   venue: requiredText("Venue", 200),
   expectedGuests: z.preprocess(
     (v) => (v === "" || v == null ? undefined : v),

@@ -15,21 +15,19 @@ export const BOOKING_STATUSES = ["PENDING", "CONFIRMED", "DECLINED", "CANCELLED"
 export type BookingStatus = (typeof BOOKING_STATUSES)[number];
 
 export const BOOKING_EVENT_TYPES = [
-  "WEDDING",
-  "CHURCH_SERVICE",
-  "CORPORATE",
-  "CONCERT",
-  "FUNERAL",
+  "WEDDING_HOLY_MASS",
+  "WEDDING_RECEPTION",
+  "CORPORATE_AWARDS",
+  "CHRISTMAS_CAROLS",
   "OTHER",
 ] as const;
 export type BookingEventType = (typeof BOOKING_EVENT_TYPES)[number];
 
 export const BOOKING_EVENT_TYPE_LABELS: Record<BookingEventType, string> = {
-  WEDDING: "Wedding",
-  CHURCH_SERVICE: "Church service",
-  CORPORATE: "Corporate event",
-  CONCERT: "Concert",
-  FUNERAL: "Funeral / memorial",
+  WEDDING_HOLY_MASS: "Wedding Holy Mass",
+  WEDDING_RECEPTION: "Wedding Reception",
+  CORPORATE_AWARDS: "Corporate Or Awards night",
+  CHRISTMAS_CAROLS: "Christmas Carols",
   OTHER: "Other",
 };
 
