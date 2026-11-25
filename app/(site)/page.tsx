@@ -176,12 +176,12 @@ export default async function HomePage({
         </div>
       </section>
 
-      {/* Book + contact */}
+      {/* Booking */}
       <section
         id="book"
         className="scroll-mt-28 bg-[var(--color-pearl)] px-4 py-20 sm:px-6 sm:py-28"
       >
-        <div id="contact" className="mx-auto max-w-6xl scroll-mt-28">
+        <div className="mx-auto max-w-6xl">
           <p className="section-label">Book the choir</p>
           <h2 className="mt-4 max-w-2xl font-[family-name:var(--font-display)] text-4xl font-semibold tracking-tight text-[var(--color-navy)] sm:text-5xl">
             Tell us about your day
@@ -222,7 +222,10 @@ export default async function HomePage({
                 </ol>
               </div>
 
-              <div className="border border-[var(--color-navy)]/10 bg-white px-6 py-7">
+              <div
+                id="contact"
+                className="scroll-mt-28 border border-[var(--color-navy)]/10 bg-white px-6 py-7"
+              >
                 <h3 className="font-[family-name:var(--font-display)] text-2xl font-semibold text-[var(--color-navy)]">
                   Contact
                 </h3>
