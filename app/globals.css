@@ -279,6 +279,7 @@ body {
   will-change: transform;
 }
 
+/* Small screens: slim tape */
 .film-tape-frame {
   position: relative;
   flex: 0 0 auto;
@@ -292,14 +293,25 @@ body {
   filter: sepia(0.12) contrast(1.04) saturate(0.92);
 }
 
-@media (min-width: 768px) {
-  .film-tape-frame {
-    height: 6.25rem;
+/* Big screens: original larger tape */
+@media (min-width: 1024px) {
+  .film-tape-edge {
+    height: 1.2rem;
+    background-size: 1.35rem 0.55rem;
   }
 
-  .film-tape-edge {
-    height: 0.65rem;
-    background-size: 1rem 0.38rem;
+  .film-tape-window {
+    padding-block: 0.35rem;
+  }
+
+  .film-tape-track {
+    gap: 0.35rem;
+    padding-inline: 0.35rem;
+  }
+
+  .film-tape-frame {
+    height: auto;
+    width: 20rem;
   }
 }
 
