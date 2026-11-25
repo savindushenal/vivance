@@ -11,7 +11,7 @@ const NAV = [
   { href: "/#gallery", label: "Gallery" },
   { href: "/about", label: "Our choir" },
   { href: "/#occasions", label: "Occasions" },
-  { href: "/contact", label: "Contact" },
+  { href: "/#contact", label: "Contact" },
 ];
 
 export function Header({ choirName }: { choirName: string }) {

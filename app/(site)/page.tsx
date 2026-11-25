@@ -146,7 +146,11 @@ export default async function HomePage({
         </div>
       </section>
 
-      <ContactCta />
+      <ContactCta
+        contactAddress={content.contactAddress}
+        contactPhone={content.contactPhone}
+        contactEmail={content.contactEmail}
+      />
 
       <SocialsSection
         choirName={content.choirName}
