@@ -16,7 +16,12 @@ export function Footer({ content }: { content: SiteContent }) {
 
         <div>
           <p className="section-label text-[var(--color-gold-soft)]">Explore</p>
-          <ul className="mt-4 space-y-2.5 text-sm">
+            <ul className="mt-4 space-y-2.5 text-sm">
+            <li>
+              <SmoothHashLink href="/#gallery" className="hover:text-white">
+                Gallery
+              </SmoothHashLink>
+            </li>
             <li>
               <SmoothHashLink href="/#about" className="hover:text-white">
                 Our choir

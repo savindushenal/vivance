@@ -234,3 +234,7 @@ body {
   text-transform: uppercase;
   color: var(--color-gold-deep);
 }
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
