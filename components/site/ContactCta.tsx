@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
+import { WhatsAppIcon } from "@/components/site/WhatsAppIcon";
+import { WhatsAppLink } from "@/components/site/WhatsAppLink";
 import { phoneList, telHref } from "@/lib/phones";
 import { SITE_IMAGES } from "@/lib/site-images";
-
-const WHATSAPP_HREF = "https://wa.me/94702433654";
+import { whatsappUrl } from "@/lib/whatsapp";
 
 export function ContactCta({
   contactAddress,
@@ -39,14 +40,7 @@ export function ContactCta({
             Contact us now
           </h2>
           <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap">
-            <a
-              href={WHATSAPP_HREF}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary"
-            >
-              WhatsApp us
-            </a>
+            <WhatsAppLink href="/booking" />
             <Link href="/booking" className="btn-ghost">
               Book now
             </Link>
@@ -80,12 +74,13 @@ export function ContactCta({
                 ))}
               </div>
               <a
-                href={WHATSAPP_HREF}
+                href={whatsappUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 inline-block text-sm font-semibold uppercase tracking-[0.12em] text-[var(--color-gold-soft)] underline-offset-4 hover:underline"
+                className="btn-whatsapp mt-5"
               >
-                Open WhatsApp
+                <WhatsAppIcon />
+                <span>Open WhatsApp</span>
               </a>
             </div>
           )}

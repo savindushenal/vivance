@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { ContactCta } from "@/components/site/ContactCta";
 import { GalleryCarousel } from "@/components/site/GalleryCarousel";
 import { SocialsSection } from "@/components/site/SocialsSection";
+import { WhatsAppLink } from "@/components/site/WhatsAppLink";
 import { getSiteContent } from "@/lib/content";
 import { SITE_IMAGES } from "@/lib/site-images";
 
@@ -89,14 +90,7 @@ export default async function HomePage({
               <Link href="/booking" className="btn-primary w-full sm:w-auto">
                 Book the choir
               </Link>
-              <a
-                href="https://wa.me/94702433654"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-ghost w-full sm:w-auto"
-              >
-                WhatsApp us
-              </a>
+              <WhatsAppLink href="/booking" className="w-full sm:w-auto" />
             </div>
           </div>
 
