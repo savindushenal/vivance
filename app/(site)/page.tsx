@@ -105,6 +105,7 @@ export default async function HomePage({
         </div>
       </section>
 
+      {/* Flush retro film tape — no gap under hero */}
       <GalleryCarousel />
 
       {/* Our choir — one story, like a simple restaurant intro */}
