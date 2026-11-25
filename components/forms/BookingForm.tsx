@@ -1,23 +1,28 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
+import { useState, useTransition } from "react";
 import Link from "next/link";
 import { submitBooking } from "@/app/actions/public";
 import { Honeypot } from "@/components/forms/Honeypot";
-import { SubmitButton } from "@/components/SubmitButton";
+import { WhatsAppIcon } from "@/components/site/WhatsAppIcon";
 import { Alert, Field, Input, Select, Textarea } from "@/components/ui";
 import {
   BOOKING_EVENT_TYPES,
   BOOKING_EVENT_TYPE_LABELS,
 } from "@/lib/constants";
-import { phoneList, telHref } from "@/lib/phones";
-import { initialActionState } from "@/lib/validations";
+import { formDataToObject } from "@/lib/utils";
+import {
+  bookingSchema,
+  fieldErrors,
+  initialActionState,
+  type ActionState,
+  type FieldErrors,
+} from "@/lib/validations";
+import { bookingWhatsAppUrl } from "@/lib/whatsapp";
 
 export function BookingForm({
   minDate,
   defaultEventType,
-  contactEmail,
-  contactPhone,
 }: {
   minDate: string;
   unavailableDates?: string[];
@@ -30,52 +35,48 @@ export function BookingForm({
       ? defaultEventType
       : "";
 
-  const [state, action] = useActionState(submitBooking, initialActionState);
   const [eventType, setEventType] = useState(initialType);
+  const [values, setValues] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<FieldErrors>({});
+  const [message, setMessage] = useState<string | undefined>();
+  const [pending, startTransition] = useTransition();
 
-  const v = state.values ?? {};
-  const e = state.errors ?? {};
+  const v = values;
+  const e = errors;
 
-  useEffect(() => {
-    if (!state.ok && state.errors && v.eventType) {
-      setEventType(v.eventType);
+  function handleSubmit(formData: FormData) {
+    const raw = formDataToObject(formData);
+    setValues(raw);
+    setMessage(undefined);
+    setErrors({});
+
+    const parsed = bookingSchema.safeParse(raw);
+    if (!parsed.success) {
+      setErrors(fieldErrors(parsed.error));
+      setMessage("Please fix the errors below.");
+      return;
     }
-  }, [state, v.eventType]);
 
-  if (state.ok) {
-    return (
-      <div className="border border-emerald-200 bg-emerald-50 p-8 text-center sm:p-10">
-        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-emerald-800">
-          Request received
-        </p>
-        <p className="mt-3 font-[family-name:var(--font-display)] text-3xl font-semibold tracking-tight text-emerald-950">
-          We will be in touch soon
-        </p>
-        <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-emerald-900/80">
-          {state.message}
-        </p>
-        <div className="mt-8 flex flex-wrap justify-center gap-3">
-          {contactEmail && (
-            <a href={`mailto:${contactEmail}`} className="btn-primary">
-              Email us
-            </a>
-          )}
-          {phoneList(contactPhone ?? "").map((phone) => (
-            <a key={phone} href={telHref(phone)} className="btn-ghost-dark">
-              Call {phone}
-            </a>
-          ))}
-          <Link href="/booking" className="btn-ghost-dark">
-            Back to booking
-          </Link>
-        </div>
-      </div>
-    );
+    const waUrl = bookingWhatsAppUrl(parsed.data);
+
+    // Soft-save for admin, then open WhatsApp with the booking details.
+    startTransition(async () => {
+      try {
+        const fd = new FormData();
+        for (const [key, value] of Object.entries(raw)) {
+          fd.set(key, value);
+        }
+        await submitBooking(initialActionState as ActionState, fd);
+      } catch {
+        // Still open WhatsApp even if the soft save fails.
+      }
+      window.location.assign(waUrl);
+    });
   }
 
   return (
-    <form action={action} className="space-y-5" noValidate>
-      {state.message && <Alert variant="error">{state.message}</Alert>}
+    <form action={handleSubmit} className="space-y-5" noValidate>
+      {message && <Alert variant="error">{message}</Alert>}
       <Honeypot />
 
       <Field label="Function" htmlFor="eventType" error={e.eventType} required>
@@ -174,10 +175,22 @@ export function BookingForm({
       </Field>
 
       <p className="text-sm text-[var(--color-ink)]/60">
-        Submitting does not lock the date. We confirm availability before anything is final.
+        Submit opens WhatsApp with your details ready to send. It does not lock the date until we
+        confirm.
       </p>
 
-      <SubmitButton pendingText="Sending request...">Submit booking request</SubmitButton>
+      <button type="submit" disabled={pending} className="btn-whatsapp-solid w-full sm:w-auto">
+        <WhatsAppIcon />
+        <span>{pending ? "Opening WhatsApp..." : "Send via WhatsApp"}</span>
+      </button>
+
+      <p className="text-xs text-[var(--color-ink)]/45">
+        Prefer not to use WhatsApp?{" "}
+        <Link href="/#contact" className="underline underline-offset-2 hover:text-[var(--color-navy)]">
+          Call or email us
+        </Link>
+        .
+      </p>
     </form>
   );
 }

@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { BookingForm } from "@/components/forms/BookingForm";
+import { WhatsAppIcon } from "@/components/site/WhatsAppIcon";
 import { getSiteContent } from "@/lib/content";
 import { toDateInput } from "@/lib/dates";
 import { getUnavailableBookingDates } from "@/lib/queries";
 import { phoneList, telHref } from "@/lib/phones";
+import { whatsappUrl } from "@/lib/whatsapp";
 
 export const metadata: Metadata = {
   title: "Book us",
@@ -95,12 +97,13 @@ export default async function BookingPage({
                 </div>
               )}
               <a
-                href="https://wa.me/94702433654"
+                href={whatsappUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-outline mt-6"
+                className="btn-whatsapp-light mt-6"
               >
-                WhatsApp us
+                <WhatsAppIcon />
+                <span>WhatsApp us</span>
               </a>
             </div>
           </aside>
