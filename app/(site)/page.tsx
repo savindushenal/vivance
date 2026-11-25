@@ -39,6 +39,7 @@ export default async function HomePage({
   }
 
   const content = await getSiteContent();
+  const aboutParagraphs = content.aboutText.split(/\n\s*\n/).filter(Boolean);
 
   return (
     <>
@@ -105,6 +106,37 @@ export default async function HomePage({
 
       <GalleryCarousel />
 
+      <section id="about" className="scroll-mt-24 bg-[var(--color-pearl)] px-4 py-20 sm:px-6 sm:py-28">
+        <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <div className="relative aspect-[16/10] overflow-hidden lg:aspect-[5/4]">
+            <Image
+              src={SITE_IMAGES.about}
+              alt={`${content.choirName} ensemble`}
+              fill
+              quality={88}
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover object-[center_35%]"
+            />
+          </div>
+          <div>
+            <p className="section-label">Our choir</p>
+            <h2 className="mt-4 font-[family-name:var(--font-display)] text-4xl font-semibold tracking-tight text-[var(--color-navy)] sm:text-5xl">
+              {content.aboutTitle || "Who we are"}
+            </h2>
+            <div className="mt-6 space-y-4 text-base leading-relaxed text-[var(--color-ink)]/70 sm:text-lg">
+              {aboutParagraphs.slice(0, 2).map((p, i) => (
+                <p key={i} className="whitespace-pre-line">
+                  {p}
+                </p>
+              ))}
+            </div>
+            <Link href="/booking" className="btn-outline mt-8">
+              Book us
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <section id="occasions" className="scroll-mt-24 bg-[var(--color-sand)] px-4 py-20 sm:px-6 sm:py-28">
         <div className="mx-auto max-w-6xl">
           <p className="section-label">What we sing for</p>
@@ -136,12 +168,6 @@ export default async function HomePage({
                 </p>
               </Link>
             ))}
-          </div>
-
-          <div className="mt-12">
-            <Link href="/about" className="btn-outline">
-              Our choir
-            </Link>
           </div>
         </div>
       </section>
