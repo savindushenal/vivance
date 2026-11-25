@@ -81,8 +81,46 @@ body {
   animation: rise 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
 }
 
+.hero-stage {
+  background: #07131e;
+}
+
+.hero-atmosphere {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 55% at 70% 40%, rgba(58, 81, 104, 0.45), transparent 70%),
+    radial-gradient(ellipse 55% 45% at 20% 75%, rgba(184, 149, 90, 0.16), transparent 70%),
+    linear-gradient(145deg, #12283c 0%, #0b1c2c 45%, #07131e 100%);
+  z-index: 0;
+}
+
 .hero-photo {
   animation: soft-zoom 1.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-veil-desktop {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(7, 19, 30, 0.88) 0%,
+      rgba(7, 19, 30, 0.55) 34%,
+      rgba(7, 19, 30, 0.12) 58%,
+      rgba(7, 19, 30, 0.2) 100%
+    ),
+    linear-gradient(180deg, rgba(7, 19, 30, 0.35) 0%, transparent 28%, rgba(7, 19, 30, 0.55) 100%);
+}
+
+.hero-veil-mobile {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(7, 19, 30, 0.72) 0%,
+      rgba(7, 19, 30, 0.35) 28%,
+      rgba(7, 19, 30, 0.08) 48%,
+      rgba(7, 19, 30, 0.45) 72%,
+      rgba(7, 19, 30, 0.85) 100%
+    );
 }
 
 .accent-line {
