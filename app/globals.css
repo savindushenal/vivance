@@ -262,7 +262,6 @@ body {
   background-size: 0.85rem 0.32rem;
   background-position: center;
   background-repeat: repeat-x;
-  animation: film-scroll 55s linear infinite;
 }
 
 .film-tape-window {
@@ -314,15 +313,12 @@ body {
 }
 
 .film-tape:hover .film-tape-track,
-.film-tape:hover .film-tape-edge,
-.film-tape:focus-within .film-tape-track,
-.film-tape:focus-within .film-tape-edge {
+.film-tape:focus-within .film-tape-track {
   animation-play-state: paused;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .film-tape-track,
-  .film-tape-edge {
+  .film-tape-track {
     animation: none !important;
   }
 }
