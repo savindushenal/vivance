@@ -282,15 +282,28 @@ body {
 /* Small screens: slim tape */
 .film-tape-frame {
   position: relative;
+  display: block;
   flex: 0 0 auto;
   width: auto;
   height: 4.75rem;
   aspect-ratio: 4 / 3;
   margin: 0;
+  padding: 0;
+  border: 0;
   overflow: hidden;
   background: #1c1916;
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
   filter: sepia(0.12) contrast(1.04) saturate(0.92);
+  cursor: zoom-in;
+}
+
+.film-tape-frame:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+.film-tape-paused .film-tape-track {
+  animation-play-state: paused;
 }
 
 /* Big screens: original larger tape */
@@ -332,5 +345,217 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .film-tape-track {
     animation: none !important;
+  }
+}
+
+/* Camera-screen lightbox for film-tape photos */
+.camera-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(5, 8, 12, 0.82);
+  backdrop-filter: blur(4px);
+}
+
+.camera-body {
+  width: min(100%, 52rem);
+  background:
+    linear-gradient(160deg, #2a2622 0%, #161310 45%, #0d0b09 100%);
+  border: 1px solid rgba(212, 188, 142, 0.22);
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  padding: 0.85rem 0.85rem 1rem;
+}
+
+.camera-chrome {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.7rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.camera-brand {
+  font-family: var(--font-display), ui-serif, Georgia, serif;
+  letter-spacing: 0.14em;
+  color: var(--color-gold-soft);
+}
+
+.camera-rec {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-left: auto;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.camera-rec-dot {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 999px;
+  background: #c44;
+  box-shadow: 0 0 0 0 rgba(204, 68, 68, 0.55);
+  animation: camera-pulse 1.4s ease-out infinite;
+}
+
+.camera-close {
+  border: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0.2rem 0.35rem;
+  cursor: pointer;
+}
+
+.camera-close:hover {
+  color: white;
+}
+
+.camera-screen {
+  position: relative;
+  background: #05070a;
+  border: 2px solid #0a0c10;
+  box-shadow:
+    inset 0 0 0 1px rgba(212, 188, 142, 0.18),
+    inset 0 0 40px rgba(0, 0, 0, 0.55);
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.camera-viewfinder span {
+  position: absolute;
+  width: 1.35rem;
+  height: 1.35rem;
+  z-index: 2;
+  border-color: rgba(212, 188, 142, 0.75);
+  border-style: solid;
+  pointer-events: none;
+}
+
+.camera-viewfinder span:nth-child(1) {
+  top: 0.7rem;
+  left: 0.7rem;
+  border-width: 2px 0 0 2px;
+}
+
+.camera-viewfinder span:nth-child(2) {
+  top: 0.7rem;
+  right: 0.7rem;
+  border-width: 2px 2px 0 0;
+}
+
+.camera-viewfinder span:nth-child(3) {
+  bottom: 0.7rem;
+  left: 0.7rem;
+  border-width: 0 0 2px 2px;
+}
+
+.camera-viewfinder span:nth-child(4) {
+  bottom: 0.7rem;
+  right: 0.7rem;
+  border-width: 0 2px 2px 0;
+}
+
+.camera-photo {
+  position: absolute;
+  inset: 0.85rem;
+}
+
+.camera-caption {
+  position: absolute;
+  left: 0.85rem;
+  right: 0.85rem;
+  bottom: 0.7rem;
+  z-index: 2;
+  margin: 0;
+  padding: 0.35rem 0.5rem;
+  background: rgba(5, 8, 12, 0.55);
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.camera-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-top: 0.9rem;
+}
+
+.camera-nav {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  color: white;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.camera-nav:hover {
+  border-color: rgba(212, 188, 142, 0.55);
+  color: var(--color-gold-soft);
+}
+
+.camera-shutter {
+  width: 3.4rem;
+  height: 3.4rem;
+  border-radius: 999px;
+  border: 2px solid rgba(212, 188, 142, 0.55);
+  background: #1a1714;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  padding: 0;
+}
+
+.camera-shutter span {
+  width: 2.35rem;
+  height: 2.35rem;
+  border-radius: 999px;
+  background: radial-gradient(circle at 35% 30%, #3a3530, #151210 70%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.camera-shutter:hover span {
+  background: radial-gradient(circle at 35% 30%, #4a433c, #1a1612 70%);
+}
+
+@keyframes camera-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(204, 68, 68, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 0.55rem rgba(204, 68, 68, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(204, 68, 68, 0);
+  }
+}
+
+@media (max-width: 640px) {
+  .camera-body {
+    padding: 0.7rem;
+  }
+
+  .camera-screen {
+    aspect-ratio: 3 / 4;
+  }
+
+  .camera-photo {
+    inset: 0.55rem;
   }
 }
