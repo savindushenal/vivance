@@ -25,7 +25,7 @@ export function GalleryCarousel() {
                 src={img.src}
                 alt={i < GALLERY_IMAGES.length ? img.alt : ""}
                 fill
-                sizes="280px"
+                sizes="140px"
                 className="object-cover"
                 quality={85}
                 draggable={false}
