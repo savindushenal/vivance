@@ -253,26 +253,16 @@ body {
 
 .film-tape-edge {
   height: 0.55rem;
-  display: flex;
-  align-items: center;
-  background:
-    linear-gradient(180deg, #1a1714 0%, #0e0c0a 100%);
-}
-
-.film-sprockets {
-  display: flex;
-  width: 200%;
-  gap: 0.7rem;
-  padding-inline: 0.35rem;
+  background-color: #12100e;
+  background-image: radial-gradient(
+    closest-side,
+    #2a2621 58%,
+    transparent 60%
+  );
+  background-size: 0.85rem 0.32rem;
+  background-position: center;
+  background-repeat: repeat-x;
   animation: film-scroll 55s linear infinite;
-}
-
-.film-sprocket {
-  flex: 0 0 0.42rem;
-  height: 0.32rem;
-  border-radius: 0.08rem;
-  background: #2a2621;
-  box-shadow: inset 0 0 0 1px rgba(212, 188, 142, 0.22);
 }
 
 .film-tape-window {
@@ -310,6 +300,7 @@ body {
 
   .film-tape-edge {
     height: 0.65rem;
+    background-size: 1rem 0.38rem;
   }
 }
 
@@ -323,15 +314,15 @@ body {
 }
 
 .film-tape:hover .film-tape-track,
-.film-tape:hover .film-sprockets,
+.film-tape:hover .film-tape-edge,
 .film-tape:focus-within .film-tape-track,
-.film-tape:focus-within .film-sprockets {
+.film-tape:focus-within .film-tape-edge {
   animation-play-state: paused;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .film-tape-track,
-  .film-sprockets {
+  .film-tape-edge {
     animation: none !important;
   }
 }

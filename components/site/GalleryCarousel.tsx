@@ -14,9 +14,7 @@ export function GalleryCarousel() {
       className="film-tape scroll-mt-0"
       aria-label="Choir photo tape"
     >
-      <div className="film-tape-edge" aria-hidden>
-        <Sprockets />
-      </div>
+      <div className="film-tape-edge" aria-hidden />
 
       <div className="film-tape-window">
         <div className="film-tape-track">
@@ -36,19 +34,7 @@ export function GalleryCarousel() {
         </div>
       </div>
 
-      <div className="film-tape-edge" aria-hidden>
-        <Sprockets />
-      </div>
+      <div className="film-tape-edge" aria-hidden />
     </section>
-  );
-}
-
-function Sprockets() {
-  return (
-    <div className="film-sprockets">
-      {Array.from({ length: 96 }, (_, i) => (
-        <span key={i} className="film-sprocket" />
-      ))}
-    </div>
   );
 }
