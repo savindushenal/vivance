@@ -12,6 +12,7 @@ import {
   BOOKING_EVENT_TYPE_LABELS,
   type BookingEventType,
 } from "@/lib/constants";
+import { phoneList, telHref } from "@/lib/phones";
 import { cn } from "@/lib/utils";
 import { initialActionState } from "@/lib/validations";
 
@@ -110,10 +111,12 @@ export function BookingForm({
         </p>
         <ol className="mx-auto mt-8 max-w-md space-y-3 text-left text-sm text-emerald-900/85">
           <li className="rounded-2xl bg-white/70 px-4 py-3">
-            <span className="font-semibold">1.</span> We review your date and occasion within 1–2 business days.
+            <span className="font-semibold">1.</span> We review your date and occasion within 1 to 2
+            business days.
           </li>
           <li className="rounded-2xl bg-white/70 px-4 py-3">
-            <span className="font-semibold">2.</span> We confirm availability and suggest repertoire & ensemble size.
+            <span className="font-semibold">2.</span> We confirm availability and suggest repertoire
+            and ensemble size.
           </li>
           <li className="rounded-2xl bg-white/70 px-4 py-3">
             <span className="font-semibold">3.</span> You lock the booking and we prepare for the day.
@@ -125,11 +128,11 @@ export function BookingForm({
               Email us
             </a>
           )}
-          {contactPhone && (
-            <a href={`tel:${contactPhone.replace(/\s+/g, "")}`} className="btn-ghost-dark">
-              Call {contactPhone}
+          {phoneList(contactPhone ?? "").map((phone) => (
+            <a key={phone} href={telHref(phone)} className="btn-ghost-dark">
+              Call {phone}
             </a>
-          )}
+          ))}
           <Link href="/#occasions" className="btn-ghost-dark">
             Back to top
           </Link>

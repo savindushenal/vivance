@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { CONTENT_FIELDS, CONTENT_KEYS } from "../lib/content-fields";
 
 const db = new PrismaClient();
 
@@ -147,7 +148,16 @@ async function main() {
     });
   }
 
-  console.log("Seeded events, schedule and sample inquiry/booking.");
+  for (const key of CONTENT_KEYS) {
+    const value = CONTENT_FIELDS[key].defaultValue;
+    await db.siteContent.upsert({
+      where: { key },
+      create: { key, value },
+      update: { value },
+    });
+  }
+
+  console.log("Seeded events, schedule, site content and sample inquiry/booking.");
 }
 
 main()

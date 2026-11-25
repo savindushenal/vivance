@@ -8,10 +8,10 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata(): Promise<Metadata> {
   const content = await getSiteContent();
   return {
-    title: { default: `${content.choirName} — Choir for hire`, template: `%s | ${content.choirName}` },
+    title: { default: `${content.choirName} | Choir for hire`, template: `%s | ${content.choirName}` },
     description:
       content.heroSubtitle ||
-      "A choir for hire. We sing for weddings, celebrations, sacred services and private events.",
+      "Vivàce is a choir for hire. We sing for weddings, celebrations, sacred services and private events.",
   };
 }
 
