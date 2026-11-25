@@ -16,7 +16,7 @@ const body = Manrope({
 
 export const metadata: Metadata = {
   title: {
-    default: "Vivàce — Choir for hire",
+    default: "Vivàce | Choir for hire",
     template: "%s | Vivàce",
   },
   description:

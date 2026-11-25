@@ -31,7 +31,7 @@ export const CONTENT_FIELDS = {
     type: "textarea",
     group: "Home page",
     defaultValue:
-      "We sing for weddings, celebrations and sacred services — live voices, ready to book.",
+      "We sing for weddings, celebrations and sacred services. Live voices, ready to book.",
   },
   homeIntro: {
     label: "Home introduction",
@@ -51,31 +51,32 @@ export const CONTENT_FIELDS = {
     type: "textarea",
     group: "About page",
     defaultValue:
-      "At Vivàce, we believe live voices make an occasion feel complete. We are a choir for hire — built for weddings, celebrations, sacred services and private events.\n\nEvery booking is shaped around your day: the room, the moment, and the music that belongs there. Clear, warm and ready when you need us.",
+      "At Vivàce, we believe live voices make an occasion feel complete. We are a choir for hire, built for weddings, celebrations, sacred services and private events.\n\nEvery booking is shaped around your day: the room, the moment, and the music that belongs there. Clear, warm and ready when you need us.",
   },
   rehearsalInfo: {
     label: "Booking note (internal / optional)",
     type: "textarea",
     group: "About page",
-    defaultValue: "Available for weddings, private celebrations, sacred services, and corporate gatherings.",
+    defaultValue:
+      "Available for weddings, private celebrations, sacred services, and corporate gatherings.",
   },
   contactEmail: {
     label: "Contact email",
     type: "email",
     group: "Contact",
-    defaultValue: "hello@vivancechoir.com",
+    defaultValue: "thevivaceinfo@gmail.com",
   },
   contactPhone: {
     label: "Contact phone",
-    type: "text",
+    type: "textarea",
     group: "Contact",
-    defaultValue: "+94 77 123 4567",
+    defaultValue: "+94 70 243 3654\n+94 77 713 5776",
   },
   contactAddress: {
     label: "Address",
     type: "textarea",
     group: "Contact",
-    defaultValue: "St. Mary's Parish Hall\n12 Church Road\nColombo",
+    defaultValue: "32/9\n4th Lane, Uyana, Moratuwa",
   },
   facebookUrl: {
     label: "Facebook URL",

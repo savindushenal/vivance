@@ -63,6 +63,6 @@ export async function submitBooking(_prev: ActionState, formData: FormData): Pro
   return {
     ok: true,
     message:
-      "Thank you! Your booking request has been received. We will contact you within 1–2 business days to confirm availability.",
+      "Thank you. Your booking request has been received. We will contact you within 1 to 2 business days to confirm availability.",
   };
 }

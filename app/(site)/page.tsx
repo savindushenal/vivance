@@ -6,6 +6,7 @@ import { SmoothHashLink } from "@/components/site/SmoothHashLink";
 import { getSiteContent } from "@/lib/content";
 import { toDateInput } from "@/lib/dates";
 import { getUnavailableBookingDates } from "@/lib/queries";
+import { phoneList, telHref } from "@/lib/phones";
 import { SITE_IMAGES } from "@/lib/site-images";
 
 const OCCASIONS = [
@@ -17,7 +18,7 @@ const OCCASIONS = [
   },
   {
     title: "Celebrations",
-    copy: "Anniversaries, private parties and gatherings that need a living tempo.",
+    copy: "Anniversaries, private parties and gatherings that call for live music.",
     image: SITE_IMAGES.candid,
     href: "/?type=OTHER#book",
   },
@@ -41,6 +42,7 @@ export default async function HomePage({
   ]);
 
   const aboutParagraphs = content.aboutText.split(/\n\s*\n/).filter(Boolean);
+  const phones = phoneList(content.contactPhone);
 
   return (
     <>
@@ -85,10 +87,10 @@ export default async function HomePage({
             </p>
             <span className="accent-line mt-4 sm:mt-5" />
             <h1 className="animate-rise-1 mt-5 font-[family-name:var(--font-display)] text-[1.65rem] font-medium leading-[1.15] text-white sm:mt-6 sm:text-4xl md:text-5xl">
-              A choir for your occasion
+              {content.heroTitle || "A choir for your occasion"}
             </h1>
             <p className="animate-rise-2 mt-3 max-w-md text-[0.95rem] leading-relaxed text-white/80 sm:mt-4 sm:text-base md:text-lg">
-              We sing for weddings, celebrations and sacred services — live voices, ready to book.
+              {content.heroSubtitle}
             </p>
             <div className="animate-rise-3 mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap">
               <SmoothHashLink href="#book" className="btn-primary w-full sm:w-auto">
@@ -187,7 +189,8 @@ export default async function HomePage({
             Tell us about your day
           </h2>
           <p className="mt-4 max-w-xl text-base leading-relaxed text-[var(--color-ink)]/65 sm:text-lg">
-            Occasion, date and a few details. A request does not lock the date until we confirm.
+            Share the occasion, date and a few details. A request does not lock the date until we
+            confirm.
           </p>
 
           <div className="mt-12 grid gap-10 lg:grid-cols-[1.6fr_1fr]">
@@ -217,7 +220,7 @@ export default async function HomePage({
                   </li>
                   <li>
                     <span className="font-semibold text-[var(--color-gold-soft)]">3.</span> We reply in
-                    1–2 business days
+                    1 to 2 business days
                   </li>
                 </ol>
               </div>
@@ -234,15 +237,19 @@ export default async function HomePage({
                     {content.contactAddress}
                   </p>
                 )}
-                {content.contactPhone && (
-                  <p className="mt-4">
-                    <a
-                      href={`tel:${content.contactPhone.replace(/\s+/g, "")}`}
-                      className="text-base font-semibold text-[var(--color-navy)] underline-offset-4 hover:underline"
-                    >
-                      {content.contactPhone}
-                    </a>
-                  </p>
+                {phones.length > 0 && (
+                  <div className="mt-4 space-y-1.5">
+                    {phones.map((phone) => (
+                      <p key={phone}>
+                        <a
+                          href={telHref(phone)}
+                          className="text-base font-semibold text-[var(--color-navy)] underline-offset-4 hover:underline"
+                        >
+                          {phone}
+                        </a>
+                      </p>
+                    ))}
+                  </div>
                 )}
                 {content.contactEmail && (
                   <p className="mt-2">
