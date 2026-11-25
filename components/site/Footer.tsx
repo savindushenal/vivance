@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { BrandWordmark } from "@/components/site/BrandMark";
 import { SmoothHashLink } from "@/components/site/SmoothHashLink";
 import type { SiteContent } from "@/lib/content-fields";
@@ -26,9 +27,9 @@ export function Footer({ content }: { content: SiteContent }) {
               </SmoothHashLink>
             </li>
             <li>
-              <SmoothHashLink href="/#about" className="hover:text-white">
+              <Link href="/about" className="hover:text-white">
                 Our choir
-              </SmoothHashLink>
+              </Link>
             </li>
             <li>
               <SmoothHashLink href="/#occasions" className="hover:text-white">
@@ -36,13 +37,18 @@ export function Footer({ content }: { content: SiteContent }) {
               </SmoothHashLink>
             </li>
             <li>
-              <SmoothHashLink href="/#book" className="hover:text-white">
+              <Link href="/booking" className="hover:text-white">
                 Book us
-              </SmoothHashLink>
+              </Link>
             </li>
             <li>
-              <SmoothHashLink href="/#contact" className="hover:text-white">
+              <Link href="/contact" className="hover:text-white">
                 Contact
+              </Link>
+            </li>
+            <li>
+              <SmoothHashLink href="/#socials" className="hover:text-white">
+                Socials
               </SmoothHashLink>
             </li>
           </ul>

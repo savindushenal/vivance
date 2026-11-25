@@ -1,12 +1,10 @@
 import Image from "next/image";
-import { BookingForm } from "@/components/forms/BookingForm";
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import { ContactCta } from "@/components/site/ContactCta";
 import { GalleryCarousel } from "@/components/site/GalleryCarousel";
-import { ScrollToBooking } from "@/components/site/ScrollToBooking";
-import { SmoothHashLink } from "@/components/site/SmoothHashLink";
+import { SocialsSection } from "@/components/site/SocialsSection";
 import { getSiteContent } from "@/lib/content";
-import { toDateInput } from "@/lib/dates";
-import { getUnavailableBookingDates } from "@/lib/queries";
-import { phoneList, telHref } from "@/lib/phones";
 import { SITE_IMAGES } from "@/lib/site-images";
 
 const OCCASIONS = [
@@ -14,19 +12,19 @@ const OCCASIONS = [
     title: "Wedding Holy Mass",
     copy: "Sacred music for the ceremony, from processional to recessional.",
     image: SITE_IMAGES.wedding,
-    href: "/?type=WEDDING_HOLY_MASS#book",
+    href: "/booking?type=WEDDING_HOLY_MASS",
   },
   {
     title: "Wedding Reception",
     copy: "Live voices for dinner, toasts and celebration moments.",
     image: SITE_IMAGES.candid,
-    href: "/?type=WEDDING_RECEPTION#book",
+    href: "/booking?type=WEDDING_RECEPTION",
   },
   {
     title: "Corporate & awards",
     copy: "Polished performances for nights that need presence.",
     image: SITE_IMAGES.performance,
-    href: "/?type=CORPORATE_AWARDS#book",
+    href: "/booking?type=CORPORATE_AWARDS",
   },
 ];
 
@@ -35,24 +33,19 @@ export default async function HomePage({
 }: {
   searchParams: Promise<{ type?: string }>;
 }) {
-  const [{ type }, content, unavailableDates] = await Promise.all([
-    searchParams,
-    getSiteContent(),
-    getUnavailableBookingDates(),
-  ]);
+  const { type } = await searchParams;
+  if (type) {
+    redirect(`/booking?type=${encodeURIComponent(type)}`);
+  }
 
-  const aboutParagraphs = content.aboutText.split(/\n\s*\n/).filter(Boolean);
-  const phones = phoneList(content.contactPhone);
+  const content = await getSiteContent();
 
   return (
     <>
-      <ScrollToBooking type={type} />
-
       {/* Hero — brand first, full-bleed, responsive */}
       <section className="hero-stage relative isolate min-h-[100svh] overflow-hidden text-white">
         <div className="hero-atmosphere" aria-hidden />
 
-        {/* Mobile hero image (portrait crop, faces lower) */}
         <div className="absolute inset-0 md:hidden">
           <Image
             src={SITE_IMAGES.heroMobile}
@@ -66,7 +59,6 @@ export default async function HomePage({
           <div className="hero-veil-mobile absolute inset-0" aria-hidden />
         </div>
 
-        {/* Desktop hero image (ensemble to the right, room for copy left) */}
         <div className="absolute inset-0 hidden md:block">
           <Image
             src={SITE_IMAGES.hero}
@@ -93,9 +85,9 @@ export default async function HomePage({
               {content.heroSubtitle}
             </p>
             <div className="animate-rise-3 mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap">
-              <SmoothHashLink href="#book" className="btn-primary w-full sm:w-auto">
+              <Link href="/booking" className="btn-primary w-full sm:w-auto">
                 Book the choir
-              </SmoothHashLink>
+              </Link>
               <a
                 href="https://wa.me/94702433654"
                 target="_blank"
@@ -107,47 +99,12 @@ export default async function HomePage({
             </div>
           </div>
 
-          {/* Spacer so copy stays above the group on phones */}
           <div className="min-h-[42svh] flex-1 md:hidden" aria-hidden />
         </div>
       </section>
 
-      {/* Flush retro film tape — no gap under hero */}
       <GalleryCarousel />
 
-      {/* Our choir — one story, like a simple restaurant intro */}
-      <section id="about" className="scroll-mt-24 bg-[var(--color-pearl)] px-4 py-20 sm:px-6 sm:py-28">
-        <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2 lg:gap-16">
-          <div className="relative aspect-[16/10] overflow-hidden lg:aspect-[5/4]">
-            <Image
-              src={SITE_IMAGES.about}
-              alt={`${content.choirName} ensemble`}
-              fill
-              quality={88}
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover object-[center_35%]"
-            />
-          </div>
-          <div>
-            <p className="section-label">Our choir</p>
-            <h2 className="mt-4 font-[family-name:var(--font-display)] text-4xl font-semibold tracking-tight text-[var(--color-navy)] sm:text-5xl">
-              {content.aboutTitle || "Who we are"}
-            </h2>
-            <div className="mt-6 space-y-4 text-base leading-relaxed text-[var(--color-ink)]/70 sm:text-lg">
-              {aboutParagraphs.slice(0, 2).map((p, i) => (
-                <p key={i} className="whitespace-pre-line">
-                  {p}
-                </p>
-              ))}
-            </div>
-            <SmoothHashLink href="#book" className="btn-outline mt-8">
-              Book us
-            </SmoothHashLink>
-          </div>
-        </div>
-      </section>
-
-      {/* Occasions — clear “menu” of what we offer */}
       <section id="occasions" className="scroll-mt-24 bg-[var(--color-sand)] px-4 py-20 sm:px-6 sm:py-28">
         <div className="mx-auto max-w-6xl">
           <p className="section-label">What we sing for</p>
@@ -160,7 +117,7 @@ export default async function HomePage({
 
           <div className="mt-14 grid gap-8 md:grid-cols-3">
             {OCCASIONS.map((item) => (
-              <SmoothHashLink key={item.title} href={item.href} className="group block">
+              <Link key={item.title} href={item.href} className="group block">
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <Image
                     src={item.image}
@@ -177,100 +134,26 @@ export default async function HomePage({
                 <p className="mt-3 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--color-gold-deep)]">
                   Start booking →
                 </p>
-              </SmoothHashLink>
+              </Link>
             ))}
           </div>
-        </div>
-      </section>
 
-      {/* Booking */}
-      <section
-        id="book"
-        className="scroll-mt-28 bg-[var(--color-pearl)] px-4 py-20 sm:px-6 sm:py-28"
-      >
-        <div className="mx-auto max-w-6xl">
-          <p className="section-label">Book the choir</p>
-          <h2 className="mt-4 max-w-2xl font-[family-name:var(--font-display)] text-4xl font-semibold tracking-tight text-[var(--color-navy)] sm:text-5xl">
-            Tell us about your day
-          </h2>
-          <p className="mt-4 max-w-xl text-base leading-relaxed text-[var(--color-ink)]/65 sm:text-lg">
-            Pick the function, date, time and venue. A request does not lock the date until we
-            confirm.
-          </p>
-
-          <div className="mt-12 grid gap-10 lg:grid-cols-[1.6fr_1fr]">
-            <div className="border border-[var(--color-navy)]/10 bg-white p-6 sm:p-8">
-              <BookingForm
-                minDate={toDateInput(new Date())}
-                unavailableDates={unavailableDates}
-                defaultEventType={type}
-                contactEmail={content.contactEmail}
-                contactPhone={content.contactPhone}
-              />
-            </div>
-
-            <aside className="space-y-8">
-              <div className="bg-[var(--color-navy)] px-6 py-7 text-white">
-                <h3 className="font-[family-name:var(--font-display)] text-2xl font-semibold">
-                  How booking works
-                </h3>
-                <ol className="mt-5 space-y-4 text-sm text-white/70">
-                  <li>
-                    <span className="font-semibold text-[var(--color-gold-soft)]">1.</span> Choose
-                    function, date and starting time
-                  </li>
-                  <li>
-                    <span className="font-semibold text-[var(--color-gold-soft)]">2.</span> Share venue
-                    and how to reach you
-                  </li>
-                  <li>
-                    <span className="font-semibold text-[var(--color-gold-soft)]">3.</span> We reply in
-                    1 to 2 business days
-                  </li>
-                </ol>
-              </div>
-
-              <div
-                id="contact"
-                className="scroll-mt-28 border border-[var(--color-navy)]/10 bg-white px-6 py-7"
-              >
-                <h3 className="font-[family-name:var(--font-display)] text-2xl font-semibold text-[var(--color-navy)]">
-                  Contact
-                </h3>
-                {content.contactAddress && (
-                  <p className="mt-4 whitespace-pre-line text-sm leading-relaxed text-[var(--color-ink)]/70">
-                    {content.contactAddress}
-                  </p>
-                )}
-                {phones.length > 0 && (
-                  <div className="mt-4 space-y-1.5">
-                    {phones.map((phone) => (
-                      <p key={phone}>
-                        <a
-                          href={telHref(phone)}
-                          className="text-base font-semibold text-[var(--color-navy)] underline-offset-4 hover:underline"
-                        >
-                          {phone}
-                        </a>
-                      </p>
-                    ))}
-                  </div>
-                )}
-                {content.contactEmail && (
-                  <p className="mt-2">
-                    <a
-                      href={`mailto:${content.contactEmail}`}
-                      className="text-sm text-[var(--color-ink)]/70 underline-offset-4 hover:underline"
-                    >
-                      {content.contactEmail}
-                    </a>
-                  </p>
-                )}
-              </div>
-            </aside>
+          <div className="mt-12">
+            <Link href="/about" className="btn-outline">
+              Our choir
+            </Link>
           </div>
         </div>
       </section>
+
+      <ContactCta />
+
+      <SocialsSection
+        choirName={content.choirName}
+        facebookUrl={content.facebookUrl}
+        instagramUrl={content.instagramUrl}
+        youtubeUrl={content.youtubeUrl}
+      />
     </>
   );
 }
