@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { BookingForm } from "@/components/forms/BookingForm";
+import { GalleryCarousel } from "@/components/site/GalleryCarousel";
 import { ScrollToBooking } from "@/components/site/ScrollToBooking";
 import { SmoothHashLink } from "@/components/site/SmoothHashLink";
 import { getSiteContent } from "@/lib/content";
@@ -103,6 +104,8 @@ export default async function HomePage({
           <div className="min-h-[42svh] flex-1 md:hidden" aria-hidden />
         </div>
       </section>
+
+      <GalleryCarousel />
 
       {/* Our choir — one story, like a simple restaurant intro */}
       <section id="about" className="scroll-mt-24 bg-[var(--color-pearl)] px-4 py-20 sm:px-6 sm:py-28">
