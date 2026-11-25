@@ -65,7 +65,7 @@ export function BookingForm({
               Call {phone}
             </a>
           ))}
-          <Link href="/#book" className="btn-ghost-dark">
+          <Link href="/booking" className="btn-ghost-dark">
             Back to booking
           </Link>
         </div>

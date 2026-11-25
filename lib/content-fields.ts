@@ -82,13 +82,13 @@ export const CONTENT_FIELDS = {
     label: "Facebook URL",
     type: "url",
     group: "Social links",
-    defaultValue: "",
+    defaultValue: "https://www.facebook.com/profile.php?id=100090051948024",
   },
   instagramUrl: {
     label: "Instagram URL",
     type: "url",
     group: "Social links",
-    defaultValue: "",
+    defaultValue: "https://www.instagram.com/chorus_vivace/",
   },
   youtubeUrl: {
     label: "YouTube URL",
