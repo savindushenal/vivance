@@ -96,9 +96,14 @@ export default async function HomePage({
               <SmoothHashLink href="#book" className="btn-primary w-full sm:w-auto">
                 Book the choir
               </SmoothHashLink>
-              <SmoothHashLink href="#about" className="btn-ghost w-full sm:w-auto">
-                Our story
-              </SmoothHashLink>
+              <a
+                href="https://wa.me/94702433654"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-ghost w-full sm:w-auto"
+              >
+                WhatsApp us
+              </a>
             </div>
           </div>
 
