@@ -3,8 +3,9 @@
 import Image from "next/image";
 import { GALLERY_IMAGES } from "@/lib/site-images";
 
-/** Duplicate once so the CSS marquee loop is seamless. */
-const TAPE = [...GALLERY_IMAGES, ...GALLERY_IMAGES];
+/** Repeat enough copies so the strip always fills wide viewports; loop half the set. */
+const COPIES = 4;
+const TAPE = Array.from({ length: COPIES }, () => GALLERY_IMAGES).flat();
 
 export function GalleryCarousel() {
   return (
@@ -45,7 +46,7 @@ export function GalleryCarousel() {
 function Sprockets() {
   return (
     <div className="film-sprockets">
-      {Array.from({ length: 48 }, (_, i) => (
+      {Array.from({ length: 96 }, (_, i) => (
         <span key={i} className="film-sprocket" />
       ))}
     </div>
