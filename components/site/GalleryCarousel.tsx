@@ -3,8 +3,9 @@
 import Image from "next/image";
 import { GALLERY_IMAGES } from "@/lib/site-images";
 
-/** Duplicate once so the CSS marquee loop is seamless. */
-const TAPE = [...GALLERY_IMAGES, ...GALLERY_IMAGES];
+/** Repeat enough copies so the strip always fills wide viewports; loop half the set. */
+const COPIES = 4;
+const TAPE = Array.from({ length: COPIES }, () => GALLERY_IMAGES).flat();
 
 export function GalleryCarousel() {
   return (
@@ -13,9 +14,7 @@ export function GalleryCarousel() {
       className="film-tape scroll-mt-0"
       aria-label="Choir photo tape"
     >
-      <div className="film-tape-edge" aria-hidden>
-        <Sprockets />
-      </div>
+      <div className="film-tape-edge" aria-hidden />
 
       <div className="film-tape-window">
         <div className="film-tape-track">
@@ -25,7 +24,7 @@ export function GalleryCarousel() {
                 src={img.src}
                 alt={i < GALLERY_IMAGES.length ? img.alt : ""}
                 fill
-                sizes="280px"
+                sizes="140px"
                 className="object-cover"
                 quality={85}
                 draggable={false}
@@ -35,19 +34,7 @@ export function GalleryCarousel() {
         </div>
       </div>
 
-      <div className="film-tape-edge" aria-hidden>
-        <Sprockets />
-      </div>
+      <div className="film-tape-edge" aria-hidden />
     </section>
-  );
-}
-
-function Sprockets() {
-  return (
-    <div className="film-sprockets">
-      {Array.from({ length: 48 }, (_, i) => (
-        <span key={i} className="film-sprocket" />
-      ))}
-    </div>
   );
 }
